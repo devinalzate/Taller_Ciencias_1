@@ -4,43 +4,77 @@ import udistrital.edu.co.model.Politico;
 
 import java.util.ArrayList;
 
+/**
+ * Clase ControllerArreglo
+ * Controlador que gestiona un arreglo de objetos del tipo "Politico".
+ */
 public class ControllerArreglo {
+
+    // Lista que almacena objetos de tipo Politico
     private ArrayList<Politico> politicos;
 
-    public ControllerArreglo(){
+    /**
+     * Constructor de la clase.
+     * Inicializa la lista de políticos.
+     */
+    public ControllerArreglo() {
         politicos = new ArrayList<>();
     }
-    //a
-    public void sortInsertPoliticos(ArrayList<Politico> politicos_base){
-        int contador = 0;
-        long time_inicial = System.currentTimeMillis();
+
+    /**
+     * Método para ordenar una lista de políticos utilizando el algoritmo de ordenamiento por inserción (Insertion Sort).
+     *
+     * @param politicos_base Lista de políticos a ordenar.
+     * El método realiza una copia de la lista base, realiza el ordenamiento y muestra el resultado.
+     * También imprime el número de intercambios realizados y el tiempo total de ejecución en milisegundos.
+     */
+    public void sortInsertPoliticos(ArrayList<Politico> politicos_base) {
+        int contador = 0; // Contador de intercambios
+        long time_inicial = System.currentTimeMillis(); // Tiempo inicial
+
+        // Crear copia de la lista base
         ArrayList<Politico> politicos_copia = new ArrayList<>(politicos_base);
+
+        // Algoritmo de ordenamiento por inserción
         for (int i = 0; i < politicos_copia.size(); i++) {
             Politico politico = politicos_copia.get(i);
-            int j = i-1;
-            while (j >= 0 && politicos_copia.get(j).getValor_a_robar() > politico.getValor_a_robar()){
-                politicos_copia.set(j+1, politicos_copia.get(j));
+            int j = i - 1;
+
+            // Desplazamiento hacia la derecha de los elementos mayores
+            while (j >= 0 && politicos_copia.get(j).getValor_a_robar() > politico.getValor_a_robar()) {
+                politicos_copia.set(j + 1, politicos_copia.get(j));
                 j--;
                 contador++;
             }
-            politicos_copia.set(j+1, politico);
+            politicos_copia.set(j + 1, politico);
         }
-        long time_final = System.currentTimeMillis();
+
+        long time_final = System.currentTimeMillis(); // Tiempo final
+
+        // Impresión de resultados
         System.out.println("Ordenado con insert");
-
         for (Politico politico : politicos_copia) {
-            System.out.println(politico.getId()+" "+politico.getEdad()+" "+politico.getValor_a_robar());
+            System.out.println(politico.getId() + " " + politico.getEdad() + " " + politico.getValor_a_robar());
         }
-
         System.out.println("Se hicieron " + contador + " intercambios");
-
-        System.out.println("Se tardo en ordenarlo: " + (time_final - time_inicial) + " ms");
+        System.out.println("Se tardó en ordenarlo: " + (time_final - time_inicial) + " ms");
     }
 
+    /**
+     * Método para ordenar una lista de políticos utilizando el algoritmo de burbuja (Bubble Sort).
+     *
+     * @param politicos_base Lista de políticos a ordenar.
+     * El método realiza una copia de la lista base, realiza el ordenamiento y muestra el resultado.
+     * También imprime el número de intercambios realizados y el tiempo total de ejecución en milisegundos.
+     */
     public void sortBubblePoliticos(ArrayList<Politico> politicos_base) {
-        int contador = 0;
-        long startTime = System.currentTimeMillis(); // Start timer
+        int contador = 0; // Contador de intercambios
+        long startTime = System.currentTimeMillis(); // Tiempo inicial
+
+        // Crear copia de la lista base
         ArrayList<Politico> politicos_copia = new ArrayList<>(politicos_base);
+
+        // Algoritmo de ordenamiento de burbuja
         for (int i = 0; i < politicos_copia.size() - 1; i++) {
             for (int j = 0; j < politicos_copia.size() - i - 1; j++) {
                 if (politicos_copia.get(j).getValor_a_robar() > politicos_copia.get(j + 1).getValor_a_robar()) {
@@ -51,36 +85,52 @@ public class ControllerArreglo {
                 }
             }
         }
-        long endTime = System.currentTimeMillis(); // End timer
-        System.out.println("Ordenado con bubble");
 
+        long endTime = System.currentTimeMillis(); // Tiempo final
+
+        // Impresión de resultados
+        System.out.println("Ordenado con bubble");
         for (Politico politico : politicos_copia) {
             System.out.println(politico.getId() + " " + politico.getEdad() + " " + politico.getValor_a_robar());
         }
-
         System.out.println("Se hicieron " + contador + " intercambios");
-
-        System.out.println("Tiempo de ejecución (ms): " + (endTime - startTime)); // Display execution time
+        System.out.println("Tiempo de ejecución (ms): " + (endTime - startTime));
     }
 
-    public void printPoliticos(){
+    /**
+     * Método para imprimir la lista de políticos almacenada en el controlador.
+     *
+     * Muestra en consola el ID, la edad y el valor a robar de cada político en la lista.
+     */
+    public void printPoliticos() {
         for (Politico politico : politicos) {
-            System.out.println(politico.getId()+" "+politico.getEdad()+" "+politico.getValor_a_robar());
+            System.out.println(politico.getId() + " " + politico.getEdad() + " " + politico.getValor_a_robar());
         }
     }
 
-    public ArrayList<Politico> getPoliticos(){
+    /**
+     * Método para obtener la lista de políticos almacenada en el controlador.
+     *
+     * @return Lista de objetos de tipo Politico.
+     */
+    public ArrayList<Politico> getPoliticos() {
         return politicos;
     }
 
-    public void CreateArrayPoliticos(int n){
+    /**
+     * Método para generar una lista de políticos de manera aleatoria.
+     *
+     * @param n Número de políticos que se desea crear.
+     * Cada político generado tendrá un ID único, una edad entre 20 y 80 años,
+     * y un valor a robar (propiedad) aleatorio entre 1 y 1,000,000.
+     */
+    public void CreateArrayPoliticos(int n) {
         for (int i = 0; i < n; i++) {
             Politico politico = new Politico();
-            politico.setId(i);
-            politico.setEdad((int) (Math.floor(Math.random() * (60 + 1)) + 20));
-            politico.setValor_a_robar((int) (Math.random() * 1000000) + 1);
-            politicos.add(politico);
+            politico.setId(i); // Asignar un ID único
+            politico.setEdad((int) (Math.floor(Math.random() * (60 + 1)) + 20)); // Edad aleatoria
+            politico.setValor_a_robar((int) (Math.random() * 1000000) + 1); // Valor a robar aleatorio
+            politicos.add(politico); // Añadir el político a la lista
         }
     }
-
 }
