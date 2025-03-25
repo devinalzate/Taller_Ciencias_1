@@ -3,7 +3,7 @@ package udistrital.edu.co.model;
 public class Politico {
     private int id;
     private int edad;
-    private int valor_a_robar;
+    private double valor_a_robar;
 
     public Politico() {
     }
@@ -24,11 +24,11 @@ public class Politico {
         return edad;
     }
 
-    public int getValor_a_robar() {
+    public double getValor_a_robar() {
         return valor_a_robar;
     }
 
-    public void setValor_a_robar(int valor_a_robar) {
+    public void setValor_a_robar(double valor_a_robar) {
         this.valor_a_robar = valor_a_robar;
     }
 }

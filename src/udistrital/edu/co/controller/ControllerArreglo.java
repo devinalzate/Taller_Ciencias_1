@@ -130,12 +130,23 @@ public class ControllerArreglo {
      * y un valor a robar (propiedad) aleatorio entre 1 y 1,000,000.
      */
     public void CreateArrayPoliticos(int n) {
-        for (int i = 0; i < n; i++) {
+        for (int i = 1; i < n; i++) {
             Politico politico = new Politico();
             politico.setId(i); // Asignar un ID único
             politico.setEdad((int) (Math.floor(Math.random() * (60 + 1)) + 20)); // Edad aleatoria
-            politico.setValor_a_robar((int) (Math.random() * 1000000) + 1); // Valor a robar aleatorio
+            politico.setValor_a_robar((Math.random() * 1000000) + 1); // Valor a robar aleatorio
             politicos.add(politico); // Añadir el político a la lista
         }
     }
+
+    public void CreateArrayPoliticosOrdenInverso(int n) {
+        for (int i = 1; i < n; i++) {
+            Politico politico = new Politico();
+            politico.setId(i); // Asignar un ID único
+            politico.setEdad((int) (Math.floor(Math.random() * (60 + 1)) + 20)); // Edad aleatoria
+            politico.setValor_a_robar((n-i) * 1.5); // Valor a robar aleatorio
+            politicos.add(politico); // Añadir el político a la lista
+        }
+    }
+
 }

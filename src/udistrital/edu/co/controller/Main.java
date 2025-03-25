@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         ControllerArreglo controllerArreglo = new ControllerArreglo();
-        controllerArreglo.CreateArrayPoliticos(100);
+        controllerArreglo.CreateArrayPoliticosOrdenInverso(100);
         controllerArreglo.printPoliticos();
         System.out.println("---------------------------");
         System.out.println("---------------------------");
