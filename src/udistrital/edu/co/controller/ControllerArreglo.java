@@ -101,6 +101,37 @@ public class ControllerArreglo {
         System.out.println("Se hicieron " + contador_comparaciones + " comparaciones");
         System.out.println("Tiempo de ejecución (ms): " + (endTime - startTime));
     }
+    public ArrayList MergeSortPoliticos(ArrayList<Politico> politicos_base, int izquierda, int derecha) {
+        if(politicos_base.size() == 1){
+            return politicos_base;
+        }
+        int medio = izquierda +(derecha-izquierda)/2;
+        MergeSortPoliticos(politicos_base, izquierda, medio);
+        MergeSortPoliticos(politicos_base, medio+1, derecha);
+        return mergeS(politicos_base,izquierda,medio,derecha);
+    }
+    public ArrayList mergeS(ArrayList<Politico> politicos_base, int izquierda, int medio, int derecha) {
+        int i= izquierda;
+        int j= medio+1;
+        while (i<medio && j<derecha){
+            if(politicos_base.get(i).getValor_a_robar() < politicos_base.get(j).getValor_a_robar()){
+                i++;
+            }else{
+                Politico pibote=politicos_base.get(j);
+                int control=j;
+                while(control>i){
+                    politicos_base.set(control, politicos_base.get(control-1));
+                    control--;
+                }
+                politicos_base.set(i, politicos_base.get(control));
+                i++;
+                j++;
+                medio++;
+            }
+
+        }
+        return politicos_base;
+    }
 
     /**
      * Método para imprimir la lista de políticos almacenada en el controlador.
