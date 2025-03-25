@@ -29,7 +29,8 @@ public class ControllerArreglo {
      * También imprime el número de intercambios realizados y el tiempo total de ejecución en milisegundos.
      */
     public void sortInsertPoliticos(ArrayList<Politico> politicos_base) {
-        int contador = 0; // Contador de intercambios
+        int contador_intercambios = 0; // Contador de intercambios
+        int contador_comparaciones = 0;
         long time_inicial = System.currentTimeMillis(); // Tiempo inicial
 
         // Crear copia de la lista base
@@ -39,12 +40,12 @@ public class ControllerArreglo {
         for (int i = 0; i < politicos_copia.size(); i++) {
             Politico politico = politicos_copia.get(i);
             int j = i - 1;
-
+            contador_intercambios++;
             // Desplazamiento hacia la derecha de los elementos mayores
             while (j >= 0 && politicos_copia.get(j).getValor_a_robar() > politico.getValor_a_robar()) {
                 politicos_copia.set(j + 1, politicos_copia.get(j));
                 j--;
-                contador++;
+                contador_comparaciones++;
             }
             politicos_copia.set(j + 1, politico);
         }
@@ -56,7 +57,8 @@ public class ControllerArreglo {
         for (Politico politico : politicos_copia) {
             System.out.println(politico.getId() + " " + politico.getEdad() + " " + politico.getValor_a_robar());
         }
-        System.out.println("Se hicieron " + contador + " intercambios");
+        System.out.println("Se hicieron " + contador_intercambios + " intercambios");
+        System.out.println("Se hicieron " + contador_comparaciones + " comparaciones");
         System.out.println("Se tardó en ordenarlo: " + (time_final - time_inicial) + " ms");
     }
 
@@ -68,7 +70,8 @@ public class ControllerArreglo {
      * También imprime el número de intercambios realizados y el tiempo total de ejecución en milisegundos.
      */
     public void sortBubblePoliticos(ArrayList<Politico> politicos_base) {
-        int contador = 0; // Contador de intercambios
+        int contador_intercambios = 0; // Contador de intercambios
+        int contador_comparaciones = 0;
         long startTime = System.currentTimeMillis(); // Tiempo inicial
 
         // Crear copia de la lista base
@@ -77,11 +80,12 @@ public class ControllerArreglo {
         // Algoritmo de ordenamiento de burbuja
         for (int i = 0; i < politicos_copia.size() - 1; i++) {
             for (int j = 0; j < politicos_copia.size() - i - 1; j++) {
+                contador_comparaciones++;
                 if (politicos_copia.get(j).getValor_a_robar() > politicos_copia.get(j + 1).getValor_a_robar()) {
                     Politico politico = politicos_copia.get(j);
                     politicos_copia.set(j, politicos_copia.get(j + 1));
                     politicos_copia.set(j + 1, politico);
-                    contador++;
+                    contador_intercambios++;
                 }
             }
         }
@@ -93,7 +97,8 @@ public class ControllerArreglo {
         for (Politico politico : politicos_copia) {
             System.out.println(politico.getId() + " " + politico.getEdad() + " " + politico.getValor_a_robar());
         }
-        System.out.println("Se hicieron " + contador + " intercambios");
+        System.out.println("Se hicieron " + contador_intercambios + " intercambios");
+        System.out.println("Se hicieron " + contador_comparaciones + " comparaciones");
         System.out.println("Tiempo de ejecución (ms): " + (endTime - startTime));
     }
 

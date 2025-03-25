@@ -12,9 +12,9 @@ public class Main {
         controllerArreglo.printPoliticos();
         System.out.println("---------------------------");
         System.out.println("---------------------------");
-        //controllerArreglo.sortInsertPoliticos(controllerArreglo.getPoliticos());
-        //System.out.println("---------------------------");
-        //System.out.println("---------------------------");
+        controllerArreglo.sortInsertPoliticos(controllerArreglo.getPoliticos());
+        System.out.println("---------------------------");
+        System.out.println("---------------------------");
         controllerArreglo.sortBubblePoliticos(controllerArreglo.getPoliticos());
     }
 }
