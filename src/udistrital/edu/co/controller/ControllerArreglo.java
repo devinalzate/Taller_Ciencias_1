@@ -104,6 +104,7 @@ public class ControllerArreglo {
     public ArrayList MergeSortPoliticos(ArrayList<Politico> politicos_base, int izquierda, int derecha) {
         if(politicos_base.size() == 1){
             return politicos_base;
+            //mondongo
         }
         int medio = izquierda +(derecha-izquierda)/2;
         MergeSortPoliticos(politicos_base, izquierda, medio);
