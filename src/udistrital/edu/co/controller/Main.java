@@ -16,6 +16,19 @@ public class Main {
 //        System.out.println("---------------------------");
 //        System.out.println("---------------------------");
 //        controllerArreglo.sortBubblePoliticos(controllerArreglo.getPoliticos());
+        Politico[] politicosOriginal = controllerArreglo.getPoliticos();
+
+        // Usar el método de instancia mergeSortPoliticos
+        Politico[] politicosCopia = controllerArreglo.mergeSortPoliticos(politicosOriginal, 0, politicosOriginal.length - 1);
+System.out.println("---------------------------");
+        // Imprimir el resultado de la copia ordenada
+        for (int i = 0; i < politicosCopia.length; i++) {
+            System.out.println(
+                    politicosCopia[i].getId() + " " + politicosCopia[i].getEdad() + " " + politicosCopia[i].getValor_a_robar()
+            );
+        }
+
+
 
 
         ControllerMatriz controllerMatriz = new ControllerMatriz();
