@@ -7,6 +7,37 @@ import java.util.ArrayList;
 public class ControllerMatriz {
     private Politico[][] matrizPoliticos;
 
+    public void InsertSortMatriz(Politico[][] matriz_base){
+        Politico[][] matriz_copia = matriz_base.clone();
+        int filas = matriz_copia.length;
+        int columnas = matriz_copia[0].length;
+
+        for(int i = 0; i < filas; i++){
+            for(int j = 1; j < columnas; j++){
+                Politico politico = matriz_copia[i][j];
+                int k = j - 1;
+                // Desplazamiento hacia la derecha de los elementos mayores
+                if(politico == null){
+                    break;
+                }
+                while (k >= 0 && matriz_copia[i][k].getValor_a_robar() > politico.getValor_a_robar()) {
+                    matriz_copia[i][k + 1] = matriz_copia[i][k];
+                    k--;
+                }
+                matriz_copia[i][k + 1] = politico;
+            }
+        }
+
+        imprimirMatrizPoliticos(matriz_copia);
+
+    }
+
+    public void BubbleSortMatriz(Politico[][] matriz_base){
+        Politico[][] matriz_copia = matriz_base.clone();
+
+
+    }
+
     public Politico[][] CreateMatriz(Politico[] politicos) {
         // Validación inicial
         if (politicos == null || politicos.length == 0) {

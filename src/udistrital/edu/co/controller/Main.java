@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         ControllerArreglo controllerArreglo = new ControllerArreglo();
-        controllerArreglo.CreateArrayPoliticos(26);
+        controllerArreglo.CreateArrayPoliticos(10);
         controllerArreglo.printPoliticos(controllerArreglo.getPoliticos());
 //        System.out.println("---------------------------");
 //        System.out.println("---------------------------");
@@ -16,8 +16,11 @@ public class Main {
 //        System.out.println("---------------------------");
 //        System.out.println("---------------------------");
 //        controllerArreglo.sortBubblePoliticos(controllerArreglo.getPoliticos());
+
+
         ControllerMatriz controllerMatriz = new ControllerMatriz();
         Politico[][] matriz = controllerMatriz.CreateMatriz(controllerArreglo.getPoliticos());
         controllerMatriz.imprimirMatrizPoliticos(matriz);
+        controllerMatriz.InsertSortMatriz(matriz);
     }
 }

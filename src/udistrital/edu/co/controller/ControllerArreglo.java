@@ -28,17 +28,17 @@ public class ControllerArreglo {
         // Crear copia de la lista base
         Politico[] politicos_copia = politicos_base.clone();
         // Algoritmo de ordenamiento por inserción
-        for (int i = 1; i < politicos_copia.length-1; i++) {
+        for (int i = 1; i < politicos_copia.length - 1; i++) {
             Politico politico = politicos_copia[i];
             int j = i - 1;
             contador_intercambios++;
             // Desplazamiento hacia la derecha de los elementos mayores
             while (j >= 0 && politicos_copia[j].getValor_a_robar() > politico.getValor_a_robar()) {
-                politicos_copia[j+1] =  politicos_copia[j];
+                politicos_copia[j + 1] = politicos_copia[j];
                 j--;
                 contador_comparaciones++;
             }
-            politicos_copia[j + 1] =  politico;
+            politicos_copia[j + 1]   = politico;
         }
 
         long time_final = System.currentTimeMillis(); // Tiempo final
@@ -159,14 +159,14 @@ public class ControllerArreglo {
         }
     }
 
-    /*public void CreateArrayPoliticosOrdenInverso(int n) {
+    public void CreateArrayPoliticosOrdenInverso(int n) {
         for (int i = 1; i < n; i++) {
             Politico politico = new Politico();
             politico.setId(i); // Asignar un ID único
             politico.setEdad((int) (Math.floor(Math.random() * (60 + 1)) + 20)); // Edad aleatoria
-            politico.setValor_a_robar((n-i) * 1.5); // Valor a robar aleatorio
-            politicos.add(politico); // Añadir el político a la lista
+            politico.setValor_a_robar((n-i) * 2); // Valor a robar aleatorio
+            politicos[i] = politico; // Añadir el político a la lista
         }
-    }*/
+    }
 
 }
