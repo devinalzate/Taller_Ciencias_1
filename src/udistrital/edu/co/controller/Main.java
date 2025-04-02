@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         ControllerArreglo controllerArreglo = new ControllerArreglo();
-        controllerArreglo.CreateArrayPoliticos(10);
+        controllerArreglo.CreateArrayPoliticos(15);
         controllerArreglo.printPoliticos(controllerArreglo.getPoliticos());
 //        System.out.println("---------------------------");
 //        System.out.println("---------------------------");

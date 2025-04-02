@@ -7,16 +7,18 @@ import java.util.ArrayList;
 public class ControllerMatriz {
     private Politico[][] matrizPoliticos;
 
+
     public void InsertSortMatriz(Politico[][] matriz_base){
         Politico[][] matriz_copia = matriz_base.clone();
         int filas = matriz_copia.length;
         int columnas = matriz_copia[0].length;
 
+        //Ordenamiento de filas (por valor robado)
         for(int i = 0; i < filas; i++){
             for(int j = 1; j < columnas; j++){
                 Politico politico = matriz_copia[i][j];
                 int k = j - 1;
-                // Desplazamiento hacia la derecha de los elementos mayores
+
                 if(politico == null){
                     break;
                 }
@@ -27,6 +29,25 @@ public class ControllerMatriz {
                 matriz_copia[i][k + 1] = politico;
             }
         }
+
+        //Ordenamiento de columnas (por edad)
+        for(int i = 0; i < columnas; i++){
+            for(int j = 1; j < filas; j++){
+                Politico politico = matriz_copia[j][i];
+                int k = j - 1;
+
+                if(politico == null){
+                    break;
+                }
+                while (k >= 0 && matriz_copia[k][i].getEdad() > politico.getEdad()) {
+                    matriz_copia[k + 1][i] = matriz_copia[k][i];
+                    k--;
+                }
+                matriz_copia[k + 1][i] = politico;
+            }
+        }
+
+        //Pendiente decidir si realizar otro ciclo
 
         imprimirMatrizPoliticos(matriz_copia);
 
