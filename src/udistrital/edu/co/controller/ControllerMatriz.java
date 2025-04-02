@@ -13,41 +13,43 @@ public class ControllerMatriz {
         int filas = matriz_copia.length;
         int columnas = matriz_copia[0].length;
 
-        //Ordenamiento de filas (por valor robado)
-        for(int i = 0; i < filas; i++){
-            for(int j = 1; j < columnas; j++){
-                Politico politico = matriz_copia[i][j];
-                int k = j - 1;
+        int maxDimension = Math.max(filas, columnas);
 
-                if(politico == null){
-                    break;
+        for (int i = 0; i < maxDimension; i++) {
+            // Ordenar fila i (si existe)
+            if (i < filas) {
+                for (int j = 1; j < columnas; j++) {
+                    Politico politico = matriz_copia[i][j];
+                    int k = j - 1;
+
+                    if (politico == null) {
+                        break;
+                    }
+                    while (k >= 0 && matriz_copia[i][k].getValor_a_robar() > politico.getValor_a_robar()) {
+                        matriz_copia[i][k + 1] = matriz_copia[i][k];
+                        k--;
+                    }
+                    matriz_copia[i][k + 1] = politico;
                 }
-                while (k >= 0 && matriz_copia[i][k].getValor_a_robar() > politico.getValor_a_robar()) {
-                    matriz_copia[i][k + 1] = matriz_copia[i][k];
-                    k--;
+            }
+
+            // Ordenar columna i (si existe)
+            if (i < columnas) {
+                for (int j = 1; j < filas; j++) {
+                    Politico politico = matriz_copia[j][i];
+                    int k = j - 1;
+
+                    if (politico == null) {
+                        break;
+                    }
+                    while (k >= 0 && matriz_copia[k][i].getEdad() > politico.getEdad()) {
+                        matriz_copia[k + 1][i] = matriz_copia[k][i];
+                        k--;
+                    }
+                    matriz_copia[k + 1][i] = politico;
                 }
-                matriz_copia[i][k + 1] = politico;
             }
         }
-
-        //Ordenamiento de columnas (por edad)
-        for(int i = 0; i < columnas; i++){
-            for(int j = 1; j < filas; j++){
-                Politico politico = matriz_copia[j][i];
-                int k = j - 1;
-
-                if(politico == null){
-                    break;
-                }
-                while (k >= 0 && matriz_copia[k][i].getEdad() > politico.getEdad()) {
-                    matriz_copia[k + 1][i] = matriz_copia[k][i];
-                    k--;
-                }
-                matriz_copia[k + 1][i] = politico;
-            }
-        }
-
-        //Pendiente decidir si realizar otro ciclo
 
         imprimirMatrizPoliticos(matriz_copia);
 
