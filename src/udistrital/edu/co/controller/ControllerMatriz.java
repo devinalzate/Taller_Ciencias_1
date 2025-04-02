@@ -57,7 +57,42 @@ public class ControllerMatriz {
 
     public void BubbleSortMatriz(Politico[][] matriz_base){
         Politico[][] matriz_copia = matriz_base.clone();
+        int filas = matriz_copia.length;
+        int columnas = matriz_copia[0].length;
 
+
+        // 1. Ordenar filas por valor_a_robar (burbuja)
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas - 1; j++) {
+                for (int k = 0; k < columnas - j - 1; k++) {
+                    if (matriz_copia[i][k] != null && matriz_copia[i][k + 1] != null) {
+                        if (matriz_copia[i][k].getValor_a_robar() > matriz_copia[i][k + 1].getValor_a_robar()) {
+                            // Intercambiar
+                            Politico temp = matriz_copia[i][k];
+                            matriz_copia[i][k] = matriz_copia[i][k + 1];
+                            matriz_copia[i][k + 1] = temp;
+                        }
+                    }
+                }
+            }
+        }
+
+        // 2. Ordenar columnas por edad, pero manteniendo orden de dinero si hay empates
+        for (int i = 0; i < columnas; i++) {
+            for (int j = 0; j < filas - 1; j++) {
+                for (int k = 0; k < filas - j - 1; k++) {
+                    if (matriz_copia[k][i] != null && matriz_copia[k + 1][i] != null) {
+                        if (matriz_copia[k][i].getEdad() > matriz_copia[k + 1][i].getEdad()) {
+                            Politico temp = matriz_copia[k][i];
+                            matriz_copia[k][i] = matriz_copia[k + 1][i];
+                            matriz_copia[k + 1][i] = temp;
+                        }
+                    }
+                }
+            }
+        }
+
+        imprimirMatrizPoliticos(matriz_copia);
 
     }
 

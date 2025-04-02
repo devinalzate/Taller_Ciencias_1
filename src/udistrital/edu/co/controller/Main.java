@@ -21,6 +21,7 @@ public class Main {
         ControllerMatriz controllerMatriz = new ControllerMatriz();
         Politico[][] matriz = controllerMatriz.CreateMatriz(controllerArreglo.getPoliticos());
         controllerMatriz.imprimirMatrizPoliticos(matriz);
-        controllerMatriz.InsertSortMatriz(matriz);
+        //controllerMatriz.InsertSortMatriz(matriz);
+        controllerMatriz.BubbleSortMatriz(matriz);
     }
 }
