@@ -12,7 +12,8 @@ public class ControllerArreglo {
 
     // Lista que almacena objetos de tipo Politico
     private Politico[] politicos;
-
+    public int comparacion = 0;
+    public int movimientos = 1;
     /**
      * Método para ordenar una lista de políticos utilizando el algoritmo de ordenamiento por inserción (Insertion Sort).
      *
@@ -88,39 +89,61 @@ public class ControllerArreglo {
         System.out.println("Se hicieron " + contador_comparaciones + " comparaciones");
         System.out.println("Tiempo de ejecución (ms): " + (endTime - startTime));
     }
-    public ArrayList MergeSortPoliticos(ArrayList<Politico> politicos_base, int izquierda, int derecha) {
-        if(politicos_base.size() == 1){
-            return politicos_base;
-            //mondongo
-        }
-        int medio = izquierda +(derecha-izquierda)/2;
-        MergeSortPoliticos(politicos_base, izquierda, medio);
-        MergeSortPoliticos(politicos_base, medio+1, derecha);
-        return mergeS(politicos_base,izquierda,medio,derecha);
-    }
-    public ArrayList mergeS(ArrayList<Politico> politicos_base, int izquierda, int medio, int derecha) {
-        int i= izquierda;
-        int j= medio+1;
-        while (i<medio && j<derecha){
-            if(politicos_base.get(i).getValor_a_robar() < politicos_base.get(j).getValor_a_robar()){
-                i++;
-            }else{
-                Politico pibote=politicos_base.get(j);
-                int control=j;
-                while(control>i){
-                    politicos_base.set(control, politicos_base.get(control-1));
-                    control--;
-                }
-                politicos_base.set(i, politicos_base.get(control));
-                i++;
-                j++;
-                medio++;
-            }
+    private long tiempoInicio;
+    private long tiempoFin;
 
+    public Politico[] mergeSortPoliticos(Politico[] politicos_base, int izquierda, int derecha) {
+        if (izquierda == 0 && derecha == politicos_base.length - 1) {
+            tiempoInicio = System.nanoTime(); // Inicia el cronómetro solo en la primera llamada
         }
-        //hola
+
+        if (izquierda >= derecha) {
+            return politicos_base;
+        } else {
+            int medio = izquierda + (derecha - izquierda) / 2;
+            mergeSortPoliticos(politicos_base, izquierda, medio);
+            mergeSortPoliticos(politicos_base, medio + 1, derecha);
+            politicos_base = mergeS(politicos_base, izquierda, medio, derecha);
+        }
+
+        if (izquierda == 0 && derecha == politicos_base.length - 1) {
+            tiempoFin = System.nanoTime(); // Termina el cronómetro en la última llamada
+            System.out.println("Tiempo total de ejecución: " + (tiempoFin - tiempoInicio) + " nanosegundos");
+        }
+
         return politicos_base;
     }
+
+    private Politico[] mergeS(Politico[] politicos_base, int izquierda, int medio, int derecha) {
+        int i = izquierda;
+        int j = medio + 1;
+
+        while (i <= medio && j <= derecha) {
+            comparacion++;
+
+            if (politicos_base[i].getValor_a_robar() <= politicos_base[j].getValor_a_robar()) {
+                i++;
+            } else {
+                Politico temp = politicos_base[j];
+                int k = j;
+
+                while (k > i) {
+                    politicos_base[k] = politicos_base[k - 1]; // Desplaza los elementos
+                    k--;
+                }
+
+                politicos_base[i] = temp; // Inserta el elemento en la posición correcta
+                movimientos++;
+
+                i++;
+                j++;
+                medio++; // Se incrementa porque hemos insertado un nuevo elemento en la izquierda
+            }
+        }
+
+        return politicos_base;
+    }
+
 
     /**
      * Método para imprimir la lista de políticos almacenada en el controlador.
