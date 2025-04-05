@@ -91,7 +91,67 @@ public class ControllerArreglo {
     }
     private long tiempoInicio;
     private long tiempoFin;
+    
+    /**
+     * Método para ordenar una lista de políticos utilizando el algoritmo quick (Quick Sort).
+     *
+     * @param politicos_base Lista de políticos a ordenar.
+     * El método realiza una copia de la lista base, realiza el ordenamiento y muestra el resultado.
+     * También imprime el número de intercambios realizados y el tiempo total de ejecución en milisegundos.
+     */
 
+    private int contador_intercambios;
+    private int contador_comparaciones;
+
+    public void quickSortPoliticos(Politico[] politics_base) {
+        contador_intercambios = 0;
+        contador_comparaciones = 0;
+        long startTime = System.currentTimeMillis();
+        
+        Politico[] politics_copia = politics_base.clone();
+        quickSort(politics_copia, 0, politics_copia.length - 1);
+        
+        long endTime = System.currentTimeMillis();
+        
+        System.out.println("Ordenado con QuickSort");
+        printPoliticos(politics_copia);
+        System.out.println("Se hicieron " + contador_intercambios + " intercambios");
+        System.out.println("Se hicieron " + contador_comparaciones + " comparaciones");
+        System.out.println("Tiempo de ejecución (ms): " + (endTime - startTime));
+    }
+
+    private void quickSort(Politico[] arr, int low, int high) {
+        if (low < high) {
+            int pi = partition(arr, low, high);
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
+        }
+    }
+
+    private int partition(Politico[] arr, int low, int high) {
+        double pivot = arr[high].getValor_a_robar();
+        int i = (low - 1);
+        
+        for (int j = low; j < high; j++) {
+            contador_comparaciones++;
+            if (arr[j].getValor_a_robar() <= pivot) {
+                i++;
+                
+                Politico temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                contador_intercambios++;
+            }
+        }
+        
+        Politico temp = arr[i+1];
+        arr[i+1] = arr[high];
+        arr[high] = temp;
+        contador_intercambios++;
+        
+        return i+1;
+    }//Fin de quickSort
+    
     public Politico[] mergeSortPoliticos(Politico[] politicos_base, int izquierda, int derecha) {
         if (izquierda == 0 && derecha == politicos_base.length - 1) {
             tiempoInicio = System.nanoTime(); // Inicia el cronómetro solo en la primera llamada
