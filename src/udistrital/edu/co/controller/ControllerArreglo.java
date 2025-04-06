@@ -2,8 +2,6 @@ package udistrital.edu.co.controller;
 
 import udistrital.edu.co.model.Politico;
 
-import java.util.ArrayList;
-
 /**
  * Clase ControllerArreglo
  * Controlador que gestiona un arreglo de objetos del tipo "Politico".

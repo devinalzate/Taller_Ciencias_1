@@ -2,8 +2,6 @@ package udistrital.edu.co.controller;
 
 import udistrital.edu.co.model.Politico;
 
-import java.util.ArrayList;
-
 public class ControllerMatriz {
     private Politico[][] matrizPoliticos;
 
