@@ -18,29 +18,35 @@ public class ControllerPrueba {
         quick = new QuickSortStrategy();
     }
 
-    public void iniciarOrdenamientoArreglo(String metodo, int n ){
+    public Politico[] iniciarOrdenamientoArreglo(String metodo, int n ){
         Politico[] lista = CreateArrayPoliticos(n);
         printPoliticos(lista);
         if (metodo.equals("insert")){
             Politico[] lista_ordenada = insert.ordenarArreglo(lista, "dinero");
             printPoliticos(lista_ordenada);
+            return lista_ordenada;
         }
         else if (metodo.equals("merge")){
             Politico[] lista_ordenada = merge.ordenarArreglo(lista, "dinero");
             printPoliticos(lista_ordenada);
+            return lista_ordenada;
         }
         else if (metodo.equals("bubble")){
             Politico[] lista_ordenada = bubble.ordenarArreglo(lista, "dinero");
             printPoliticos(lista_ordenada);
+            return lista_ordenada;
         }
         else if(metodo.equals("selection")){
             Politico[] lista_ordenada = selection.ordenarArreglo(lista, "dinero");
             printPoliticos(lista_ordenada);
+            return lista_ordenada;
         }
         else if(metodo.equals("quick")){
             Politico[] lista_ordenada = quick.ordenarArreglo(lista, "dinero");
             printPoliticos(lista_ordenada);
+            return lista_ordenada;
         }
+        return null;
     }
 
     public void iniciarOrdenamientoMatriz(String metodo, int n){
