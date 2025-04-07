@@ -12,6 +12,7 @@ public class ComparacionAlgoritmos extends JFrame {
 
     // Componentes globales
     private JTextField txtTamano, txtFactor;
+    private JButton btnCalcular;
     private JTable tableArreglo, tableMatriz;
     private DefaultTableModel modelArreglo, modelMatriz;
     private JTabbedPane tabbedPane;
@@ -57,7 +58,7 @@ public class ComparacionAlgoritmos extends JFrame {
         add(txtFactor);
 
         // Botón CALCULAR
-        JButton btnCalcular = new JButton("CALCULAR");
+        btnCalcular = new JButton("CALCULAR");
         btnCalcular.setFont(new Font("Arial", Font.BOLD, 12));
         btnCalcular.setBackground(new Color(0x52, 0xB7, 0x88)); // #52b788
         btnCalcular.setForeground(Color.WHITE);
@@ -150,15 +151,23 @@ public class ComparacionAlgoritmos extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        // Ejecutar en el Event Dispatch Thread (EDT)
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                ComparacionAlgoritmos app = new ComparacionAlgoritmos();
-                app.setLocationRelativeTo(null); // Centrar ventana
-                app.setVisible(true);
-            }
-        });
+    public int getTxtTamano() {
+        return Integer.parseInt(txtTamano.getText());
     }
+
+    public int getTxtFactor() {
+        return Integer.parseInt(txtFactor.getText());
+    }
+
+    //    public static void main(String[] args) {
+//        // Ejecutar en el Event Dispatch Thread (EDT)
+//        SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                ComparacionAlgoritmos app = new ComparacionAlgoritmos();
+//                app.setLocationRelativeTo(null); // Centrar ventana
+//                app.setVisible(true);
+//            }
+//        });
+//    }
 }
