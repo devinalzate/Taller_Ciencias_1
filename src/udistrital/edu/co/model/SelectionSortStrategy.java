@@ -58,7 +58,23 @@ public class SelectionSortStrategy implements SortStrategy {
 
     @Override
     public Politico[][] ordenarMatriz(Politico[][] matriz) {
-        return null;
+        long inicio = System.currentTimeMillis();
+        Politico[][] matriz_copia = matriz.clone();
+        int filas = matriz_copia.length;
+        int columnas = matriz_copia[0].length;
+
+        Politico[] arreglo = SortStrategy.unirFilas(matriz_copia);
+
+        Politico[] arreglo_ordenado = ordenarArreglo(arreglo, "edad");
+
+        matriz_copia = SortStrategy.convertirAMatriz(arreglo_ordenado, columnas);
+
+        for (int i = 0; i < matriz_copia.length; i++) {
+            matriz_copia[i] = ordenarArreglo(matriz_copia[i], "dinero");
+        }
+
+        tiempoEjecucion = System.currentTimeMillis() - inicio;
+        return matriz_copia;
     }
 
     @Override

@@ -12,8 +12,25 @@ public class MergeSortStrategy implements SortStrategy {
 
     @Override
     public Politico[][] ordenarMatriz(Politico[][] matriz) {
-        return null;
+        long inicio = System.currentTimeMillis();
+        Politico[][] matriz_copia = matriz.clone();
+        int filas = matriz_copia.length;
+        int columnas = matriz_copia[0].length;
+
+        Politico[] arreglo = SortStrategy.unirFilas(matriz_copia);
+
+        Politico[] arreglo_ordenado = ordenarArreglo(arreglo, "edad");
+
+        matriz_copia = SortStrategy.convertirAMatriz(arreglo_ordenado, columnas);
+
+        for (int i = 0; i < matriz_copia.length; i++) {
+            matriz_copia[i] = mergeSortPoliticos(matriz_copia[i], 0, matriz[i].length - 1, "dinero");
+        }
+
+        tiempoEjecucion = System.currentTimeMillis() - inicio;
+        return matriz_copia;
     }
+
 
     public Politico[] mergeSortPoliticos(Politico[] politicos_base, int izquierda, int derecha,String criterio) {
         long tiempoInicio = System.nanoTime();
@@ -39,58 +56,70 @@ public class MergeSortStrategy implements SortStrategy {
         return politicos_base;
     }
 
-    private Politico[] mergeS(Politico[] politicos_base, int izquierda, int medio, int derecha,String criterio) {
+    private Politico[] mergeS(Politico[] politicos_base, int izquierda, int medio, int derecha, String criterio) {
         int i = izquierda;
         int j = medio + 1;
 
         while (i <= medio && j <= derecha) {
-            comparaciones++;
-            if (criterio.equals("edad")) {
-                if (politicos_base[i].getEdad() <= politicos_base[j].getEdad()) {
-                    i++;
-                } else {
-                    Politico temp = politicos_base[j];
-                    int k = j;
-
-                    while (k > i) {
-                        politicos_base[k] = politicos_base[k - 1]; // Desplaza los elementos
-                        k--;
-                    }
-
-                    politicos_base[i] = temp; // Inserta el elemento en la posición correcta
-                    movimientos++;
-
-                    i++;
-                    j++;
-                    medio++; // Se incrementa porque hemos insertado un nuevo elemento en la izquierda
-                }
+            // Si ambos elementos son null, avanza los dos punteros
+            if (politicos_base[i] == null && politicos_base[j] == null) {
+                i++;
+                j++;
+                continue;
             }
-            if (criterio.equals("dinero")){
 
-                if (politicos_base[i].getValor_a_robar() <= politicos_base[j].getValor_a_robar()) {
+            // Si uno es null, mueve el no-null a la izquierda
+            if (politicos_base[i] == null) {
+                Politico temp = politicos_base[j];
+                int k = j;
+                while (k > i) {
+                    politicos_base[k] = politicos_base[k - 1];
+                    k--;
+                }
+                politicos_base[i] = temp;
+                movimientos++;
+                i++;
+                j++;
+                medio++;
+                continue;
+            }
+
+            if (politicos_base[j] == null) {
+                j++;
+                continue; // Ignora el null a la derecha, no hay nada que comparar
+            }
+
+            comparaciones++;
+            boolean condicion;
+
+            if (criterio.equals("edad")) {
+                condicion = politicos_base[i].getEdad() <= politicos_base[j].getEdad();
+            } else if (criterio.equals("dinero")) {
+                condicion = politicos_base[i].getValor_a_robar() <= politicos_base[j].getValor_a_robar();
+            } else {
+                throw new IllegalArgumentException("Criterio no válido: " + criterio);
+            }
+
+            if (condicion) {
                 i++;
             } else {
                 Politico temp = politicos_base[j];
                 int k = j;
-
                 while (k > i) {
-                    politicos_base[k] = politicos_base[k - 1]; // Desplaza los elementos
+                    politicos_base[k] = politicos_base[k - 1];
                     k--;
                 }
-
-                politicos_base[i] = temp; // Inserta el elemento en la posición correcta
+                politicos_base[i] = temp;
                 movimientos++;
-
                 i++;
                 j++;
-                medio++; // Se incrementa porque hemos insertado un nuevo elemento en la izquierda
+                medio++;
             }
-            }
-
         }
 
         return politicos_base;
     }
+
 
     @Override
     public int getComparaciones() {
