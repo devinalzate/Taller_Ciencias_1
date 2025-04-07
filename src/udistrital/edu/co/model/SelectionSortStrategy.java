@@ -6,7 +6,7 @@ public class SelectionSortStrategy implements SortStrategy {
     private long tiempoEjecucion;
 
     @Override
-    public Politico[] ordenarArreglo(Politico[] politicos) {
+    public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
         movimientos = 0;
         comparaciones = 0;
         long tiempoInicial = System.nanoTime();

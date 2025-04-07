@@ -28,6 +28,10 @@ public class ControllerPrueba {
             Politico[] lista_ordenada = merge.ordenarArreglo(lista, "dinero");
             printPoliticos(lista_ordenada);
         }
+        else if (metodo.equals("bubble")){
+//            Politico[][] lista_ordenada = bubble.ordenarMatriz(lista);
+//            printPoliticos(lista_ordenada);
+        }
     }
 
     public Politico[] CreateArrayPoliticos(int n) {

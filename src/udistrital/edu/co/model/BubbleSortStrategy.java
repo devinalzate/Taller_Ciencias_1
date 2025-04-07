@@ -21,14 +21,32 @@ public class BubbleSortStrategy implements SortStrategy {
         Politico[] politicos_copia = politicos.clone();
 
         // Algoritmo de ordenamiento de burbuja
-        for (int i = 0; i < politicos_copia.length - 1; i++) {
-            for (int j = 0; j < politicos_copia.length - i - 1; j++) {
-                comparaciones++;
-                if (politicos_copia[j].getValor_a_robar() > politicos_copia[j+1].getValor_a_robar()) {
-                    Politico politico = politicos_copia[j];
-                    politicos_copia[j] =  politicos_copia[j+1];
-                    politicos_copia[j+1]= politico;
-                    movimientos++;
+        if (criterio.equals("dinero")){
+            for (int i = 0; i < politicos_copia.length - 1; i++) {
+                for (int j = 0; j < politicos_copia.length - i - 1; j++) {
+                    comparaciones++;
+                    if (politicos_copia[j].getValor_a_robar() > politicos_copia[j + 1].getValor_a_robar()) {
+                        Politico politico = politicos_copia[j];
+                        politicos_copia[j] = politicos_copia[j + 1];
+                        politicos_copia[j + 1] = politico;
+                        movimientos++;
+                    }
+                }
+            }
+        }
+
+        if (criterio.equals("edad")){
+            for (int i = 0; i < politicos_copia.length - 1; i++) {
+                for (int j = 0; j < politicos_copia.length - i - 1; j++) {
+                    comparaciones++;
+                    if (politicos_copia[j] != null && politicos_copia[j +1] != null){
+                        if (politicos_copia[j].getEdad() > politicos_copia[j + 1].getEdad()) {
+                            Politico politico = politicos_copia[j];
+                            politicos_copia[j] = politicos_copia[j + 1];
+                            politicos_copia[j + 1] = politico;
+                            movimientos++;
+                        }
+                    }
                 }
             }
         }
@@ -46,6 +64,13 @@ public class BubbleSortStrategy implements SortStrategy {
         int columnas = matriz_copia[0].length;
 
 
+        Politico[] arreglo = SortStrategy.unirFilas(matriz_copia);
+
+        Politico[] arreglo_ordenado = ordenarArreglo(arreglo, "edad");
+
+        matriz_copia = SortStrategy.convertirAMatriz(arreglo_ordenado, columnas);
+
+
         // 1. Ordenar filas por valor_a_robar (burbuja)
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas - 1; j++) {
@@ -61,21 +86,21 @@ public class BubbleSortStrategy implements SortStrategy {
                 }
             }
         }
-
-        // 2. Ordenar columnas por edad, pero manteniendo orden de dinero si hay empates
-        for (int i = 0; i < columnas; i++) {
-            for (int j = 0; j < filas - 1; j++) {
-                for (int k = 0; k < filas - j - 1; k++) {
-                    if (matriz_copia[k][i] != null && matriz_copia[k + 1][i] != null) {
-                        if (matriz_copia[k][i].getEdad() > matriz_copia[k + 1][i].getEdad()) {
-                            Politico temp = matriz_copia[k][i];
-                            matriz_copia[k][i] = matriz_copia[k + 1][i];
-                            matriz_copia[k + 1][i] = temp;
-                        }
-                    }
-                }
-            }
-        }
+//
+//        // 2. Ordenar columnas por edad, pero manteniendo orden de dinero si hay empates
+//        for (int i = 0; i < columnas; i++) {
+//            for (int j = 0; j < filas - 1; j++) {
+//                for (int k = 0; k < filas - j - 1; k++) {
+//                    if (matriz_copia[k][i] != null && matriz_copia[k + 1][i] != null) {
+//                        if (matriz_copia[k][i].getEdad() > matriz_copia[k + 1][i].getEdad()) {
+//                            Politico temp = matriz_copia[k][i];
+//                            matriz_copia[k][i] = matriz_copia[k + 1][i];
+//                            matriz_copia[k + 1][i] = temp;
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
         tiempoEjecucion = System.currentTimeMillis() - inicio;
     }

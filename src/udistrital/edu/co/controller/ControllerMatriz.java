@@ -1,11 +1,14 @@
 package udistrital.edu.co.controller;
 
+import udistrital.edu.co.model.BubbleSortStrategy;
 import udistrital.edu.co.model.InsertionSortStrategy;
 import udistrital.edu.co.model.Politico;
+import udistrital.edu.co.model.SortStrategy;
 
 public class ControllerMatriz {
     private Politico[][] matrizPoliticos;
     public InsertionSortStrategy insert = new InsertionSortStrategy();
+    public BubbleSortStrategy bubble = new BubbleSortStrategy();
 
     public static Politico[] unirFilas(Politico[][] matriz) {
         // Primero, calculamos el total de elementos
@@ -81,9 +84,17 @@ public class ControllerMatriz {
     }
 
     public void BubbleSortMatriz(Politico[][] matriz_base){
+        long inicio = System.currentTimeMillis();
         Politico[][] matriz_copia = matriz_base.clone();
         int filas = matriz_copia.length;
         int columnas = matriz_copia[0].length;
+
+
+        Politico[] arreglo = unirFilas(matriz_copia);
+
+        Politico[] arreglo_ordenado = bubble.ordenarArreglo(arreglo, "edad");
+
+        matriz_copia = convertirAMatriz(arreglo_ordenado, columnas);
 
 
         // 1. Ordenar filas por valor_a_robar (burbuja)
@@ -96,21 +107,6 @@ public class ControllerMatriz {
                             Politico temp = matriz_copia[i][k];
                             matriz_copia[i][k] = matriz_copia[i][k + 1];
                             matriz_copia[i][k + 1] = temp;
-                        }
-                    }
-                }
-            }
-        }
-
-        // 2. Ordenar columnas por edad, pero manteniendo orden de dinero si hay empates
-        for (int i = 0; i < columnas; i++) {
-            for (int j = 0; j < filas - 1; j++) {
-                for (int k = 0; k < filas - j - 1; k++) {
-                    if (matriz_copia[k][i] != null && matriz_copia[k + 1][i] != null) {
-                        if (matriz_copia[k][i].getEdad() > matriz_copia[k + 1][i].getEdad()) {
-                            Politico temp = matriz_copia[k][i];
-                            matriz_copia[k][i] = matriz_copia[k + 1][i];
-                            matriz_copia[k + 1][i] = temp;
                         }
                     }
                 }
