@@ -260,4 +260,87 @@ public class ControllerPrueba {
         }
         System.out.println(ESQUINA_INF_DER);
     }
+    public void probarTodosLosAlgoritmos(int tamañoInicial, double coeficiente) {
+        String[] metodos = {"insert", "merge", "bubble", "selection", "quick"};
+
+        for (String metodo : metodos) {
+            System.out.println("\n\n========== MÉTODO: " + metodo.toUpperCase() + " ==========\n");
+            int tamañoActual = tamañoInicial;
+
+            while (tamañoActual <= 300000000) {
+                System.out.println("Tamaño actual: " + tamañoActual);
+
+                // Crear datos
+                Politico[] arregloOriginal = this.CreateArrayPoliticos(tamañoActual);
+                Politico[][] matrizOriginal = this.CreateMatriz(arregloOriginal);
+
+                // --- Arreglo ---
+                System.out.println(">>> ARREGLO ORIGINAL:");
+                this.printPoliticos(arregloOriginal);
+
+                long inicioArreglo = System.nanoTime();
+                Politico[] arregloOrdenado = null;
+                switch (metodo) {
+                    case "insert":
+                        arregloOrdenado = this.insert.ordenarArreglo(arregloOriginal.clone(), "dinero");
+                        break;
+                    case "merge":
+                        arregloOrdenado = this.merge.ordenarArreglo(arregloOriginal.clone(), "dinero");
+                        break;
+                    case "bubble":
+                        arregloOrdenado = this.bubble.ordenarArreglo(arregloOriginal.clone(), "dinero");
+                        break;
+                    case "selection":
+                        arregloOrdenado = this.selection.ordenarArreglo(arregloOriginal.clone(), "dinero");
+                        break;
+                    case "quick":
+                        arregloOrdenado = this.quick.ordenarArreglo(arregloOriginal.clone(), "dinero");
+                        break;
+                }
+                long finArreglo = System.nanoTime();
+
+                System.out.println(">>> ARREGLO ORDENADO:");
+                this.printPoliticos(arregloOrdenado);
+
+                // --- Matriz ---
+                System.out.println(">>> MATRIZ ORIGINAL:");
+                this.imprimirMatrizPoliticos(matrizOriginal);
+
+                long inicioMatriz = System.nanoTime();
+                Politico[][] matrizOrdenada = null;
+                switch (metodo) {
+                    case "insert":
+                        matrizOrdenada = this.insert.ordenarMatriz(matrizOriginal);
+                        break;
+                    case "merge":
+                        matrizOrdenada = this.merge.ordenarMatriz(matrizOriginal);
+                        break;
+                    case "bubble":
+                        matrizOrdenada = this.bubble.ordenarMatriz(matrizOriginal);
+                        break;
+                    case "selection":
+                        matrizOrdenada = this.selection.ordenarMatriz(matrizOriginal);
+                        break;
+                    case "quick":
+                        matrizOrdenada = this.quick.ordenarMatriz(matrizOriginal);
+                        break;
+                }
+                long finMatriz = System.nanoTime();
+
+                System.out.println(">>> MATRIZ ORDENADA:");
+                this.imprimirMatrizPoliticos(matrizOrdenada);
+
+                // Tiempos
+                long tiempoArreglo = (finArreglo - inicioArreglo) / 1000000;
+                long tiempoMatriz = (finMatriz - inicioMatriz) / 1000000;
+
+                System.out.println("→ Tiempo en ordenar ARREGLO: " + tiempoArreglo + " ms");
+                System.out.println("→ Tiempo en ordenar MATRIZ: " + tiempoMatriz + " ms");
+                System.out.println("======================================================");
+
+                tamañoActual = (int) Math.round(tamañoActual * coeficiente);
+            }
+        }
+    }
+
 }
