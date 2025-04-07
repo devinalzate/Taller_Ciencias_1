@@ -8,6 +8,9 @@ public class Main {
         ControllerPrueba control = new ControllerPrueba();
         control.iniciarOrdenamientoArreglo("merge", 10);
         control.iniciarOrdenamientoMatriz("insert", 17);
+        control.iniciarOrdenamientoMatriz("merge", 16);
+        control.iniciarOrdenamientoMatriz("quick", 16);
+        control.iniciarOrdenamientoMatriz("selection", 16);
 
     }
 }
