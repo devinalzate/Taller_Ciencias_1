@@ -3,7 +3,7 @@ package udistrital.edu.co.controller;
 import udistrital.edu.co.model.*;
 
 public class ControllerPrueba {
-
+    
     private InsertionSortStrategy insert;
     private BubbleSortStrategy bubble;
     private MergeSortStrategy merge;
