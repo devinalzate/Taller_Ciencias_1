@@ -13,21 +13,40 @@ public class SelectionSortStrategy implements SortStrategy {
 
         Politico[] politicos_copia = politicos.clone();
         int n = politicos_copia.length;
+        if (criterio.equals("dinero")) {
+            for (int i = 0; i < n - 1; i++) {
+                int minimo = i;
+                for (int j = i + 1; j < n; j++) {
+                    comparaciones++;
+                    if (politicos_copia[j].getValor_a_robar() < politicos_copia[minimo].getValor_a_robar()) {
+                        minimo = j;
+                    }
+                }
 
-        for(int i = 0; i < n-1; i++) {
-            int minimo = i;
-            for(int j = i+1; j < n; j++) {
-                comparaciones++;
-                if(politicos_copia[j].getValor_a_robar() < politicos_copia[minimo].getValor_a_robar()) {
-                    minimo = j;
+                if (minimo != i) {
+                    Politico auxiliar = politicos_copia[minimo];
+                    politicos_copia[minimo] = politicos_copia[i];
+                    politicos_copia[i] = auxiliar;
+                    movimientos++;
                 }
             }
+        }
+        if (criterio.equals("edad")) {
+            for (int i = 0; i < n - 1; i++) {
+                int minimo = i;
+                for (int j = i + 1; j < n; j++) {
+                    comparaciones++;
+                    if (politicos_copia[j].getEdad() < politicos_copia[minimo].getEdad()) {
+                        minimo = j;
+                    }
+                }
 
-            if(minimo != i) {
-                Politico auxiliar = politicos_copia[minimo];
-                politicos_copia[minimo] = politicos_copia[i];
-                politicos_copia[i] = auxiliar;
-                movimientos++;
+                if (minimo != i) {
+                    Politico auxiliar = politicos_copia[minimo];
+                    politicos_copia[minimo] = politicos_copia[i];
+                    politicos_copia[i] = auxiliar;
+                    movimientos++;
+                }
             }
         }
 
