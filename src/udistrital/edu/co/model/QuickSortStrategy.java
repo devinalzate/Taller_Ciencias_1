@@ -9,41 +9,65 @@ public class QuickSortStrategy implements SortStrategy{
     public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
         long inicio = System.currentTimeMillis();
         Politico[] politicos_copia = politicos.clone();
-        quickSort(politicos_copia, 0, politicos_copia.length - 1);
+        quickSort(politicos_copia, 0, politicos_copia.length - 1, criterio);
         tiempoEjecucion = System.currentTimeMillis() - inicio;
         return politicos_copia;
 
     }
 
-    private void quickSort(Politico[] arr, int low, int high) {
+    private void quickSort(Politico[] arr, int low, int high,String criterio) {
         if (low < high) {
-            int pi = partition(arr, low, high);
-            quickSort(arr, low, pi - 1);
-            quickSort(arr, pi + 1, high);
+            int pi = partition(arr, low, high, criterio);
+            quickSort(arr, low, pi - 1, criterio);
+            quickSort(arr, pi + 1, high, criterio);
         }
     }
 
-    private int partition(Politico[] arr, int low, int high) {
-        double pivot = arr[high].getValor_a_robar();
+    private int partition(Politico[] arr, int low, int high, String criterio) {
         int i = (low - 1);
+        if (criterio.equals("edad")) {
+            double pivot = arr[high].getEdad();
 
-        for (int j = low; j < high; j++) {
-            comparaciones++;
-            if (arr[j].getValor_a_robar() <= pivot) {
-                i++;
 
-                Politico temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-                movimientos++;
+            for (int j = low; j < high; j++) {
+                comparaciones++;
+                if (arr[j].getEdad() <= pivot) {
+                    i++;
+
+                    Politico temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                    movimientos++;
+                }
             }
+
+            Politico temp = arr[i + 1];
+            arr[i + 1] = arr[high];
+            arr[high] = temp;
+            movimientos++;
         }
+        if (criterio.equals("dinero")) {
+            double pivot = arr[high].getValor_a_robar();
 
-        Politico temp = arr[i+1];
-        arr[i+1] = arr[high];
-        arr[high] = temp;
-        movimientos++;
 
+            for (int j = low; j < high; j++) {
+                comparaciones++;
+                if (arr[j].getValor_a_robar() <= pivot) {
+                    i++;
+
+                    Politico temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                    movimientos++;
+                }
+            }
+
+
+            Politico temp = arr[i + 1];
+            arr[i + 1] = arr[high];
+            arr[high] = temp;
+            movimientos++;
+        }
         return i+1;
     }
 
