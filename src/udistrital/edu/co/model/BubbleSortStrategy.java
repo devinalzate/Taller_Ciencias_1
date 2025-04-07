@@ -57,7 +57,7 @@ public class BubbleSortStrategy implements SortStrategy {
     }
 
     @Override
-    public void ordenarMatriz(Politico[][] matriz) {
+    public Politico[][] ordenarMatriz(Politico[][] matriz) {
         long inicio = System.currentTimeMillis();
         Politico[][] matriz_copia = matriz.clone();
         int filas = matriz_copia.length;
@@ -86,23 +86,9 @@ public class BubbleSortStrategy implements SortStrategy {
                 }
             }
         }
-//
-//        // 2. Ordenar columnas por edad, pero manteniendo orden de dinero si hay empates
-//        for (int i = 0; i < columnas; i++) {
-//            for (int j = 0; j < filas - 1; j++) {
-//                for (int k = 0; k < filas - j - 1; k++) {
-//                    if (matriz_copia[k][i] != null && matriz_copia[k + 1][i] != null) {
-//                        if (matriz_copia[k][i].getEdad() > matriz_copia[k + 1][i].getEdad()) {
-//                            Politico temp = matriz_copia[k][i];
-//                            matriz_copia[k][i] = matriz_copia[k + 1][i];
-//                            matriz_copia[k + 1][i] = temp;
-//                        }
-//                    }
-//                }
-//            }
-//        }
 
         tiempoEjecucion = System.currentTimeMillis() - inicio;
+        return matriz_copia;
     }
 
     @Override

@@ -11,8 +11,8 @@ public class MergeSortStrategy implements SortStrategy {
     }
 
     @Override
-    public void ordenarMatriz(Politico[][] matriz) {
-
+    public Politico[][] ordenarMatriz(Politico[][] matriz) {
+        return null;
     }
 
     public Politico[] mergeSortPoliticos(Politico[] politicos_base, int izquierda, int derecha) {

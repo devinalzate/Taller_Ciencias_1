@@ -66,7 +66,7 @@ public class InsertionSortStrategy implements SortStrategy{
     }
 
     @Override
-    public void ordenarMatriz(Politico[][] matriz) {
+    public Politico[][] ordenarMatriz(Politico[][] matriz) {
 
         long inicio = System.currentTimeMillis();
         Politico[][] matriz_copia = matriz.clone();
@@ -100,7 +100,7 @@ public class InsertionSortStrategy implements SortStrategy{
         }
 
         tiempoEjecucion = System.currentTimeMillis() - inicio;
-
+        return matriz_copia;
     }
 
     @Override

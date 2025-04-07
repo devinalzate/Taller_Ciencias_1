@@ -38,8 +38,8 @@ public class SelectionSortStrategy implements SortStrategy {
     }
 
     @Override
-    public void ordenarMatriz(Politico[][] matriz) {
-
+    public Politico[][] ordenarMatriz(Politico[][] matriz) {
+        return null;
     }
 
     @Override
