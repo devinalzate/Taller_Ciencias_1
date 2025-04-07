@@ -12,26 +12,90 @@ public class InsertionSortStrategy implements SortStrategy{
      * El método realiza una copia de la lista base, realiza el ordenamiento y muestra el resultado.
      * También guarda el número de intercambios realizados y el tiempo total de ejecución en milisegundos.
      */
+    public static Politico[] unirFilas(Politico[][] matriz) {
+        // Primero, calculamos el total de elementos
+        int totalElementos = 0;
+        for (Politico[] fila : matriz) {
+            totalElementos += fila.length;
+        }
+
+        // Creamos el arreglo resultante
+        Politico[] resultado = new Politico[totalElementos];
+
+        // Llenamos el arreglo con los elementos de la matriz
+        int index = 0;
+        for (Politico[] fila : matriz) {
+            for (Politico elemento : fila) {
+                resultado[index++] = elemento;
+            }
+        }
+
+        return resultado;
+    }
+
+    public static Politico[][] convertirAMatriz(Politico[] arreglo, int columnas) {
+        if (columnas <= 0) {
+            throw new IllegalArgumentException("El número de columnas debe ser mayor que cero.");
+        }
+
+        int filas = (int) Math.ceil((double) arreglo.length / columnas);
+        Politico[][] matriz = new Politico[filas][columnas];
+
+        for (int i = 0; i < arreglo.length; i++) {
+            int fila = i / columnas;
+            int col = i % columnas;
+            matriz[fila][col] = arreglo[i];
+        }
+
+        return matriz;
+    }
+
     @Override
-    public Politico[] ordenarArreglo(Politico[] politicos) {
+    public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
         long inicio = System.currentTimeMillis();
 
         // Crear copia de la lista base
         Politico[] copia = politicos.clone();
 
         // Algoritmo de ordenamiento por inserción
-        for (int i = 1; i < copia.length; i++) {
-            Politico actual = copia[i];
-            int j = i - 1;
-            movimientos++;
+        if (criterio.equals("dinero")){
+            for (int i = 1; i < copia.length; i++) {
+                Politico actual = copia[i];
+                int j = i - 1;
+                movimientos++;
 
-            // Desplazamiento hacia la derecha de los elementos mayores
-            while (j >= 0 && (copia[j].getValor_a_robar() > actual.getValor_a_robar())) {
-                copia[j + 1] = copia[j];
-                j--;
-                comparaciones++;
+                if (actual == null){
+                    break;
+                }
+
+                // Desplazamiento hacia la derecha de los elementos mayores
+                while (j >= 0 && (copia[j].getValor_a_robar() > actual.getValor_a_robar())) {
+                    copia[j + 1] = copia[j];
+                    j--;
+                    comparaciones++;
+                }
+                copia[j + 1] = actual;
             }
-            copia[j + 1] = actual;
+        }
+
+        if (criterio.equals("edad")){
+            for (int i = 1; i < copia.length; i++) {
+                Politico actual = copia[i];
+                int j = i - 1;
+                movimientos++;
+
+                if (actual == null){
+                    break;
+                }
+
+                // Desplazamiento hacia la derecha de los elementos mayores
+                while (j >= 0 && (copia[j].getEdad() > actual.getEdad())) {
+                    copia[j + 1] = copia[j];
+                    j--;
+                    comparaciones++;
+                }
+                copia[j + 1] = actual;
+            }
         }
         tiempoEjecucion = System.currentTimeMillis() - inicio;
         return copia;
@@ -44,10 +108,16 @@ public class InsertionSortStrategy implements SortStrategy{
         Politico[][] matriz_copia = matriz.clone();
         int filas = matriz_copia.length;
         int columnas = matriz_copia[0].length;
+
+        Politico[] arreglo = unirFilas(matriz_copia);
+
+        Politico[] arreglo_ordenado = ordenarArreglo(arreglo, "edad");
+
+        matriz_copia = convertirAMatriz(arreglo_ordenado, columnas);
+
         int maxDimension = Math.max(filas, columnas);
 
         for (int i = 0; i < maxDimension; i++) {
-            // Ordenar fila i (si existe)
             if (i < filas) {
                 for (int j = 1; j < columnas; j++) {
                     Politico politico = matriz_copia[i][j];
@@ -61,23 +131,6 @@ public class InsertionSortStrategy implements SortStrategy{
                         k--;
                     }
                     matriz_copia[i][k + 1] = politico;
-                }
-            }
-
-            // Ordenar columna i (si existe)
-            if (i < columnas) {
-                for (int j = 1; j < filas; j++) {
-                    Politico politico = matriz_copia[j][i];
-                    int k = j - 1;
-
-                    if (politico == null) {
-                        break;
-                    }
-                    while (k >= 0 && matriz_copia[k][i].getEdad() > politico.getEdad()) {
-                        matriz_copia[k + 1][i] = matriz_copia[k][i];
-                        k--;
-                    }
-                    matriz_copia[k + 1][i] = politico;
                 }
             }
         }

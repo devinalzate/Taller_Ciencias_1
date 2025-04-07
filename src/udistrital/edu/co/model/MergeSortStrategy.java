@@ -6,7 +6,7 @@ public class MergeSortStrategy implements SortStrategy {
     private long tiempoEjecucion = 0;
 
     @Override
-    public Politico[] ordenarArreglo(Politico[] politicos) {
+    public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
         return mergeSortPoliticos(politicos,0 ,politicos.length-1 );
     }
 

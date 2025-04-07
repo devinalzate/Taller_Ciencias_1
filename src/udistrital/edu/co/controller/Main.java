@@ -5,9 +5,12 @@ import udistrital.edu.co.model.Politico;
 // Este programa se esta ejecutando con una version de JDK 21
 public class Main {
     public static void main(String[] args) {
+//        ControllerPrueba control = new ControllerPrueba();
+//        control.iniciarOrdenamiento("merge", 10);
+
         ControllerArreglo controllerArreglo = new ControllerArreglo();
-        controllerArreglo.CreateArrayPoliticos(15);
-        controllerArreglo.printPoliticos(controllerArreglo.getPoliticos());
+        controllerArreglo.CreateArrayPoliticos(17);
+//        controllerArreglo.printPoliticos(controllerArreglo.getPoliticos());
 //        System.out.println("---------------------------");
 //        System.out.println("---------------------------");
 //        controllerArreglo.sortInsertPoliticos(controllerArreglo.getPoliticos());
@@ -32,7 +35,7 @@ public class Main {
         ControllerMatriz controllerMatriz = new ControllerMatriz();
         Politico[][] matriz = controllerMatriz.CreateMatriz(controllerArreglo.getPoliticos());
         controllerMatriz.imprimirMatrizPoliticos(matriz);
-        //controllerMatriz.InsertSortMatriz(matriz);
-        controllerMatriz.BubbleSortMatriz(matriz);
+        controllerMatriz.InsertSortMatriz(matriz);
+//        controllerMatriz.BubbleSortMatriz(matriz);
     }
 }

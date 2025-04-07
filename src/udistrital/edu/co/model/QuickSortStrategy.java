@@ -6,7 +6,7 @@ public class QuickSortStrategy implements SortStrategy{
     private long tiempoEjecucion = 0;
 
     @Override
-    public Politico[] ordenarArreglo(Politico[] politicos) {
+    public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
         long inicio = System.currentTimeMillis();
         Politico[] politicos_copia = politicos.clone();
         quickSort(politicos_copia, 0, politicos_copia.length - 1);

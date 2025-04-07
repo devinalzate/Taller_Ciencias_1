@@ -1,20 +1,64 @@
 package udistrital.edu.co.controller;
 
+import udistrital.edu.co.model.InsertionSortStrategy;
 import udistrital.edu.co.model.Politico;
 
 public class ControllerMatriz {
     private Politico[][] matrizPoliticos;
+    public InsertionSortStrategy insert = new InsertionSortStrategy();
 
+    public static Politico[] unirFilas(Politico[][] matriz) {
+        // Primero, calculamos el total de elementos
+        int totalElementos = 0;
+        for (Politico[] fila : matriz) {
+            totalElementos += fila.length;
+        }
+
+        // Creamos el arreglo resultante
+        Politico[] resultado = new Politico[totalElementos];
+
+        // Llenamos el arreglo con los elementos de la matriz
+        int index = 0;
+        for (Politico[] fila : matriz) {
+            for (Politico elemento : fila) {
+                resultado[index++] = elemento;
+            }
+        }
+
+        return resultado;
+    }
+
+    public static Politico[][] convertirAMatriz(Politico[] arreglo, int columnas) {
+        if (columnas <= 0) {
+            throw new IllegalArgumentException("El número de columnas debe ser mayor que cero.");
+        }
+
+        int filas = (int) Math.ceil((double) arreglo.length / columnas);
+        Politico[][] matriz = new Politico[filas][columnas];
+
+        for (int i = 0; i < arreglo.length; i++) {
+            int fila = i / columnas;
+            int col = i % columnas;
+            matriz[fila][col] = arreglo[i];
+        }
+
+        return matriz;
+    }
 
     public void InsertSortMatriz(Politico[][] matriz_base){
         Politico[][] matriz_copia = matriz_base.clone();
         int filas = matriz_copia.length;
         int columnas = matriz_copia[0].length;
 
+        Politico[] arreglo = unirFilas(matriz_copia);
+
+        Politico[] arreglo_ordenado = insert.ordenarArreglo(arreglo, "edad");
+
+        matriz_copia = convertirAMatriz(arreglo_ordenado, columnas);
+
         int maxDimension = Math.max(filas, columnas);
 
         for (int i = 0; i < maxDimension; i++) {
-            // Ordenar fila i (si existe)
             if (i < filas) {
                 for (int j = 1; j < columnas; j++) {
                     Politico politico = matriz_copia[i][j];
@@ -28,23 +72,6 @@ public class ControllerMatriz {
                         k--;
                     }
                     matriz_copia[i][k + 1] = politico;
-                }
-            }
-
-            // Ordenar columna i (si existe)
-            if (i < columnas) {
-                for (int j = 1; j < filas; j++) {
-                    Politico politico = matriz_copia[j][i];
-                    int k = j - 1;
-
-                    if (politico == null) {
-                        break;
-                    }
-                    while (k >= 0 && matriz_copia[k][i].getEdad() > politico.getEdad()) {
-                        matriz_copia[k + 1][i] = matriz_copia[k][i];
-                        k--;
-                    }
-                    matriz_copia[k + 1][i] = politico;
                 }
             }
         }

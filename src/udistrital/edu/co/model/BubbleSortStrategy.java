@@ -14,7 +14,7 @@ public class BubbleSortStrategy implements SortStrategy {
      */
 
     @Override
-    public Politico[] ordenarArreglo(Politico[] politicos) {
+    public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
         long inicio = System.currentTimeMillis(); // Tiempo inicial
 
         // Crear copia de la lista base
