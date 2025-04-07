@@ -12,43 +12,7 @@ public class InsertionSortStrategy implements SortStrategy{
      * El método realiza una copia de la lista base, realiza el ordenamiento y muestra el resultado.
      * También guarda el número de intercambios realizados y el tiempo total de ejecución en milisegundos.
      */
-    public static Politico[] unirFilas(Politico[][] matriz) {
-        // Primero, calculamos el total de elementos
-        int totalElementos = 0;
-        for (Politico[] fila : matriz) {
-            totalElementos += fila.length;
-        }
 
-        // Creamos el arreglo resultante
-        Politico[] resultado = new Politico[totalElementos];
-
-        // Llenamos el arreglo con los elementos de la matriz
-        int index = 0;
-        for (Politico[] fila : matriz) {
-            for (Politico elemento : fila) {
-                resultado[index++] = elemento;
-            }
-        }
-
-        return resultado;
-    }
-
-    public static Politico[][] convertirAMatriz(Politico[] arreglo, int columnas) {
-        if (columnas <= 0) {
-            throw new IllegalArgumentException("El número de columnas debe ser mayor que cero.");
-        }
-
-        int filas = (int) Math.ceil((double) arreglo.length / columnas);
-        Politico[][] matriz = new Politico[filas][columnas];
-
-        for (int i = 0; i < arreglo.length; i++) {
-            int fila = i / columnas;
-            int col = i % columnas;
-            matriz[fila][col] = arreglo[i];
-        }
-
-        return matriz;
-    }
 
     @Override
     public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
@@ -109,11 +73,11 @@ public class InsertionSortStrategy implements SortStrategy{
         int filas = matriz_copia.length;
         int columnas = matriz_copia[0].length;
 
-        Politico[] arreglo = unirFilas(matriz_copia);
+        Politico[] arreglo = SortStrategy.unirFilas(matriz_copia);
 
         Politico[] arreglo_ordenado = ordenarArreglo(arreglo, "edad");
 
-        matriz_copia = convertirAMatriz(arreglo_ordenado, columnas);
+        matriz_copia = SortStrategy.convertirAMatriz(arreglo_ordenado, columnas);
 
         int maxDimension = Math.max(filas, columnas);
 
