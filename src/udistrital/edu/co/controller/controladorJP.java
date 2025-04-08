@@ -30,6 +30,18 @@ public class controladorJP {
         return politicos;
     }
 
+    public Politico[] CreateArrayPoliticosOrdenInverso(int n) {
+        Politico[] politicos = new Politico[n];
+        for (int i = 1; i < n; i++) {
+            Politico politico = new Politico();
+            politico.setId(i); // Asignar un ID único
+            politico.setEdad((int) (Math.floor(Math.random() * (60 + 1)) + 20)); // Edad aleatoria
+            politico.setValor_a_robar((n - i) * 2); // Valor a robar aleatorio
+            politicos[i] = politico; // Añadir el político a la lista
+        }
+        return politicos;
+    }
+
     public ResultadoComparacion CreateArrayPoliticos(Politico[] politicos) {
         Politico[] copia1 = politicos.clone();
         Politico[] copia2 = politicos.clone();
