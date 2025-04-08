@@ -35,7 +35,9 @@ public class ConectionController {
         return estadisticas;
 
        */
-        controlador.realizarComparacionesCrecientes(tamaño, 2);
+       controlador.imprimirMatriz(controlador.realizarComparacionesCrecientes(tamaño, 2));
+
+
     }
 
 }

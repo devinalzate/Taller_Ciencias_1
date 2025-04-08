@@ -26,19 +26,23 @@ public class InsertionSortStrategy implements SortStrategy{
             for (int i = 1; i < copia.length; i++) {
                 Politico actual = copia[i];
                 int j = i - 1;
-                movimientos++;
-
                 if (actual == null){
                     break;
+                }
+
+                while (j >= 0 && (copia[j].getValor_a_robar() < actual.getValor_a_robar())) {
+                    comparaciones++;
                 }
 
                 // Desplazamiento hacia la derecha de los elementos mayores
                 while (j >= 0 && (copia[j].getValor_a_robar() > actual.getValor_a_robar())) {
                     copia[j + 1] = copia[j];
                     j--;
+                    movimientos++;
                     comparaciones++;
                 }
                 copia[j + 1] = actual;
+
             }
         }
 

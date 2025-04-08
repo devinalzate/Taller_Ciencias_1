@@ -92,6 +92,7 @@ public class ComparacionAlgoritmos extends JFrame {
         // Deshabilitar reordenación de columnas
         tableArreglo.getTableHeader().setReorderingAllowed(false);
 
+
         // Agregar tabla a un JScrollPane en panelArreglo
         JScrollPane scrollArreglo = new JScrollPane(tableArreglo);
         scrollArreglo.setBounds(0, 0, 600, 250);
@@ -177,4 +178,5 @@ public class ComparacionAlgoritmos extends JFrame {
 //            }
 //        });
 //    }
+
 }

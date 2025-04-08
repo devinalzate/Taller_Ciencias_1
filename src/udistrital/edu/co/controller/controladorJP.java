@@ -32,7 +32,7 @@ public class controladorJP {
 
     public Politico[] CreateArrayPoliticosOrdenInverso(int n) {
         Politico[] politicos = new Politico[n];
-        for (int i = 1; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             Politico politico = new Politico();
             politico.setId(i); // Asignar un ID único
             politico.setEdad((int) (Math.floor(Math.random() * (60 + 1)) + 20)); // Edad aleatoria
@@ -57,25 +57,25 @@ public class controladorJP {
 
         long[][] resultados = new long[5][3];
 
-        resultados[0][0] = insert.getComparaciones();
-        resultados[0][1] = insert.getMovimientos();
-        resultados[0][2] = insert.getTiempoEjecucion();
+        resultados[0][2] = bubble.getComparaciones();
+        resultados[0][1] = bubble.getMovimientos();
+        resultados[0][0] = bubble.getTiempoEjecucion();
 
-        resultados[1][0] = bubble.getComparaciones();
-        resultados[1][1] = bubble.getMovimientos();
-        resultados[1][2] = bubble.getTiempoEjecucion();
+        resultados[1][2] = insert.getComparaciones();
+        resultados[1][1] = insert.getMovimientos();
+        resultados[1][0] = insert.getTiempoEjecucion();
 
-        resultados[2][0] = merge.getComparaciones();
+        resultados[2][2] = merge.getComparaciones();
         resultados[2][1] = merge.getMovimientos();
-        resultados[2][2] = merge.getTiempoEjecucion();
+        resultados[2][0] = merge.getTiempoEjecucion();
 
-        resultados[3][0] = selection.getComparaciones();
+        resultados[3][2] = selection.getComparaciones();
         resultados[3][1] = selection.getMovimientos();
-        resultados[3][2] = selection.getTiempoEjecucion();
+        resultados[3][0] = selection.getTiempoEjecucion();
 
-        resultados[4][0] = quick.getComparaciones();
+        resultados[4][2] = quick.getComparaciones();
         resultados[4][1] = quick.getMovimientos();
-        resultados[4][2] = quick.getTiempoEjecucion();
+        resultados[4][0] = quick.getTiempoEjecucion();
 
         // Devolver la copia ordenada (puede ser cualquiera) junto con los resultados
         return new ResultadoComparacion(copia5, resultados); // Usamos quick como referencia
@@ -89,39 +89,42 @@ public class controladorJP {
     long[][] estadisticas = resultado.getEstadisticas();*/
 
 
-    public void realizarComparacionesCrecientes(int tamañoInicial, int tasaCrecimiento) {
+    public long[][] realizarComparacionesCrecientes(int tamañoInicial, int tasaCrecimiento) {
         int tamaño = tamañoInicial;
 
-        System.out.printf("%-10s %-20s %-20s %-20s\n", "Tamaño", "Algoritmo", "Comparaciones", "Movimientos");
 
-        while (tamaño <= 200) {
-            long[][] acumulados = new long[5][3]; // Para guardar la suma de comparaciones, movimientos, tiempo
-            int repeticiones = 5; // Para mayor precisión en el promedio
+        long[][] acumulados = new long[5][3];
+        int repeticiones = 0;
+        while (tamaño <= 100) {
+             // Para guardar la suma de comparaciones, movimientos, tiempo
+            repeticiones += 1; // Para mayor precisión en el promedio
+            Politico[] arreglo = CreateArrayPoliticosOrdenInverso(tamaño);
+            ResultadoComparacion resultado = OrdenamientoPoliticos(arreglo);
+            long[][] datos = resultado.getEstadisticas();
 
-            for (int i = 0; i < repeticiones; i++) {
-                Politico[] arreglo = CreateArrayPoliticos(tamaño);
-                ResultadoComparacion resultado = OrdenamientoPoliticos(arreglo);
-                long[][] datos = resultado.getEstadisticas();
-
-                // Acumular los resultados para promediarlos
-                for (int j = 0; j < 5; j++) {
-                    for (int k = 0; k < 3; k++) {
-                        acumulados[j][k] += datos[j][k];
-                    }
+            // Acumular los resultados para promediarlos
+            for (int j = 0; j < 5; j++) {
+                for (int k = 0; k < 3; k++) {
+                    acumulados[j][k] += datos[j][k];
                 }
             }
 
-            // Mostrar promedios
-            String[] algoritmos = {"Insert", "Bubble", "Merge", "Selection", "Quick"};
-            for (int i = 0; i < 5; i++) {
-                long promedioComparaciones = acumulados[i][0] / repeticiones;
-                long promedioMovimientos = acumulados[i][1] / repeticiones;
-                // Si también quieres mostrar tiempo, puedes usar: acumulados[i][2] / repeticiones
-
-                System.out.printf("%-10d %-20s %-20d %-20d\n", tamaño, algoritmos[i], promedioComparaciones, promedioMovimientos);
-            }
 
             tamaño *= tasaCrecimiento; // Aumentar el tamaño con la tasa de crecimiento
+        }
+        for (int j = 0; j < 5; j++) {
+            for (int k = 0; k < 3; k++) {
+                acumulados[j][k] = acumulados[j][k]/repeticiones;
+            }
+        }
+        return acumulados;
+    }
+    public static void imprimirMatriz(long[][] matriz) {
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                System.out.print(matriz[i][j] + "\t");
+            }
+            System.out.println();
         }
     }
 }
