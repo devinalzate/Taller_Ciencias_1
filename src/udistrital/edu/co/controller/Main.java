@@ -12,7 +12,9 @@ public class Main {
 //        control.iniciarOrdenamientoMatriz("merge", 16);
 //        control.iniciarOrdenamientoMatriz("quick", 16);
 //        control.iniciarOrdenamientoMatriz("selection", 16);
-        ConectionController controller = new ConectionController();
-        controller.inicializar();
+        //ConectionController controller = new ConectionController();
+        //controller.inicializar();
+        controladorJP funciona  = new controladorJP();
+        funciona.realizarComparacionesCrecientes(20,2);
     }
 }
