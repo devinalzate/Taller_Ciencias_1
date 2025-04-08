@@ -1,5 +1,7 @@
 package udistrital.edu.co.view;
 
+import udistrital.edu.co.controller.ConectionController;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -121,6 +123,11 @@ public class ComparacionAlgoritmos extends JFrame {
         btnCalcular.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int valor = Integer.parseInt(getTxtTamano());
+
+                ConectionController controller = new ConectionController();
+
+                controller.calcular(valor);
                 copiarTabla();
             }
         });
@@ -151,8 +158,8 @@ public class ComparacionAlgoritmos extends JFrame {
         }
     }
 
-    public int getTxtTamano() {
-        return Integer.parseInt(txtTamano.getText());
+    public String getTxtTamano() {
+        return txtTamano.getText();
     }
 
     public int getTxtFactor() {

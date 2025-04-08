@@ -17,12 +17,14 @@ public class ConectionController {
     public void inicializar(){
         vista.setLocationRelativeTo(null);
         vista.setVisible(true);
+    }
 
-        int tamaño = vista.getTxtTamano();
+    public void calcular(int tamaño){
 
         Ordenamiento ordenamiento = controlador.iniciarOrdenamientoArreglo("insert", tamaño);
 
         System.out.println(ordenamiento.getComparaciones());
+
 
     }
 

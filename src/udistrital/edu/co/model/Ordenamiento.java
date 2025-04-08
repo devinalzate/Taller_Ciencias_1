@@ -1,7 +1,8 @@
 package udistrital.edu.co.model;
 
 public class Ordenamiento {
-    private int comparaciones, intercambios;
+    private int comparaciones;
+    private int intercambios;
 
     public Ordenamiento(){
     }
