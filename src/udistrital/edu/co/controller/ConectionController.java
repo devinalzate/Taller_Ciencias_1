@@ -11,7 +11,6 @@ public class ConectionController {
     public ConectionController(){
         this.vista = new ComparacionAlgoritmos();
         this.controlador = new ControllerPrueba();
-        inicializar();
     }
 
     public void inicializar(){

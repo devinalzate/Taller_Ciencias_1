@@ -12,5 +12,6 @@ public class Main {
 //        control.iniciarOrdenamientoMatriz("quick", 16);
 //        control.iniciarOrdenamientoMatriz("selection", 16);
         ConectionController controller = new ConectionController();
+        controller.inicializar();
     }
 }
