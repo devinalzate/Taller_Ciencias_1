@@ -42,7 +42,7 @@ public class controladorJP {
         return politicos;
     }
 
-    public ResultadoComparacion CreateArrayPoliticos(Politico[] politicos) {
+    public ResultadoComparacion OrdenamientoPoliticos(Politico[] politicos) {
         Politico[] copia1 = politicos.clone();
         Politico[] copia2 = politicos.clone();
         Politico[] copia3 = politicos.clone();
@@ -88,4 +88,40 @@ public class controladorJP {
     Politico[] arregloOrdenado = resultado.getArregloOrdenado();
     long[][] estadisticas = resultado.getEstadisticas();*/
 
+
+    public void realizarComparacionesCrecientes(int tamañoInicial, int tasaCrecimiento) {
+        int tamaño = tamañoInicial;
+
+        System.out.printf("%-10s %-20s %-20s %-20s\n", "Tamaño", "Algoritmo", "Comparaciones", "Movimientos");
+
+        while (tamaño <= 200) {
+            long[][] acumulados = new long[5][3]; // Para guardar la suma de comparaciones, movimientos, tiempo
+            int repeticiones = 5; // Para mayor precisión en el promedio
+
+            for (int i = 0; i < repeticiones; i++) {
+                Politico[] arreglo = CreateArrayPoliticos(tamaño);
+                ResultadoComparacion resultado = OrdenamientoPoliticos(arreglo);
+                long[][] datos = resultado.getEstadisticas();
+
+                // Acumular los resultados para promediarlos
+                for (int j = 0; j < 5; j++) {
+                    for (int k = 0; k < 3; k++) {
+                        acumulados[j][k] += datos[j][k];
+                    }
+                }
+            }
+
+            // Mostrar promedios
+            String[] algoritmos = {"Insert", "Bubble", "Merge", "Selection", "Quick"};
+            for (int i = 0; i < 5; i++) {
+                long promedioComparaciones = acumulados[i][0] / repeticiones;
+                long promedioMovimientos = acumulados[i][1] / repeticiones;
+                // Si también quieres mostrar tiempo, puedes usar: acumulados[i][2] / repeticiones
+
+                System.out.printf("%-10d %-20s %-20d %-20d\n", tamaño, algoritmos[i], promedioComparaciones, promedioMovimientos);
+            }
+
+            tamaño *= tasaCrecimiento; // Aumentar el tamaño con la tasa de crecimiento
+        }
+    }
 }
