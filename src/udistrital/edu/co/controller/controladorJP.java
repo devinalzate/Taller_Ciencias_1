@@ -29,6 +29,7 @@ public class controladorJP {
         }
         return politicos;
     }
+
     public ResultadoComparacion CreateArrayPoliticos(Politico[] politicos) {
         Politico[] copia1 = politicos.clone();
         Politico[] copia2 = politicos.clone();
@@ -72,7 +73,7 @@ public class controladorJP {
 
     como usar
     ResultadoComparacion resultado = CreateArrayPoliticos(arregloOriginal);
-Politico[] arregloOrdenado = resultado.getArregloOrdenado();
-long[][] estadisticas = resultado.getEstadisticas();*/
+    Politico[] arregloOrdenado = resultado.getArregloOrdenado();
+    long[][] estadisticas = resultado.getEstadisticas();*/
 
 }

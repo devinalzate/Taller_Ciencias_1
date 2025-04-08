@@ -2,15 +2,16 @@ package udistrital.edu.co.controller;
 
 import udistrital.edu.co.model.Ordenamiento;
 import udistrital.edu.co.model.Politico;
+import udistrital.edu.co.model.ResultadoComparacion;
 import udistrital.edu.co.view.ComparacionAlgoritmos;
 
 public class ConectionController {
     private ComparacionAlgoritmos vista;
-    private ControllerPrueba controlador;
+    private controladorJP controlador;
 
     public ConectionController(){
         this.vista = new ComparacionAlgoritmos();
-        this.controlador = new ControllerPrueba();
+        this.controlador = new controladorJP();
     }
 
     public void inicializar(){
@@ -18,13 +19,13 @@ public class ConectionController {
         vista.setVisible(true);
     }
 
-    public void calcular(int tamaño){
+    public long[][] calcular(int tamaño){
+        Politico[] inicial = controlador.CreateArrayPoliticos(tamaño);
 
-        Ordenamiento ordenamiento = controlador.iniciarOrdenamientoArreglo("insert", tamaño);
+        ResultadoComparacion resultado = controlador.CreateArrayPoliticos(inicial);
 
-        System.out.println(ordenamiento.getComparaciones());
-
-
+        long[][] estadisticas = resultado.getEstadisticas();
+        return estadisticas;
     }
 
 }
