@@ -9,8 +9,10 @@ public class ControllerPrueba {
     private MergeSortStrategy merge;
     private SelectionSortStrategy selection;
     private QuickSortStrategy quick;
+    private Ordenamiento valores;
 
     public ControllerPrueba(){
+        valores = new Ordenamiento();
         insert = new InsertionSortStrategy();
         bubble = new BubbleSortStrategy();
         merge = new MergeSortStrategy();
@@ -18,33 +20,47 @@ public class ControllerPrueba {
         quick = new QuickSortStrategy();
     }
 
-    public Politico[] iniciarOrdenamientoArreglo(String metodo, int n ){
+    public Ordenamiento iniciarOrdenamientoArreglo(String metodo, int n ){
         Politico[] lista = CreateArrayPoliticos(n);
         printPoliticos(lista);
         if (metodo.equals("insert")){
             Politico[] lista_ordenada = insert.ordenarArreglo(lista, "dinero");
+            valores.setComparaciones(insert.getComparaciones());
+            valores.setIntercambios(insert.getMovimientos());
             printPoliticos(lista_ordenada);
-            return lista_ordenada;
+            return valores;
         }
         else if (metodo.equals("merge")){
             Politico[] lista_ordenada = merge.ordenarArreglo(lista, "dinero");
             printPoliticos(lista_ordenada);
-            return lista_ordenada;
+            valores.setComparaciones(merge.getComparaciones());
+            valores.setIntercambios(merge.getMovimientos());
+            printPoliticos(lista_ordenada);
+            return valores;
         }
         else if (metodo.equals("bubble")){
             Politico[] lista_ordenada = bubble.ordenarArreglo(lista, "dinero");
             printPoliticos(lista_ordenada);
-            return lista_ordenada;
+            valores.setComparaciones(bubble.getComparaciones());
+            valores.setIntercambios(bubble.getMovimientos());
+            printPoliticos(lista_ordenada);
+            return valores;
         }
         else if(metodo.equals("selection")){
             Politico[] lista_ordenada = selection.ordenarArreglo(lista, "dinero");
             printPoliticos(lista_ordenada);
-            return lista_ordenada;
+            valores.setComparaciones(selection.getComparaciones());
+            valores.setIntercambios(selection.getMovimientos());
+            printPoliticos(lista_ordenada);
+            return valores;
         }
         else if(metodo.equals("quick")){
             Politico[] lista_ordenada = quick.ordenarArreglo(lista, "dinero");
             printPoliticos(lista_ordenada);
-            return lista_ordenada;
+            valores.setComparaciones(quick.getComparaciones());
+            valores.setIntercambios(quick.getMovimientos());
+            printPoliticos(lista_ordenada);
+            return valores;
         }
         return null;
     }

@@ -1,5 +1,6 @@
 package udistrital.edu.co.controller;
 
+import udistrital.edu.co.model.Ordenamiento;
 import udistrital.edu.co.model.Politico;
 import udistrital.edu.co.view.ComparacionAlgoritmos;
 
@@ -19,7 +20,9 @@ public class ConectionController {
 
         int tamaño = vista.getTxtTamano();
 
-        Politico[] array = controlador.iniciarOrdenamientoArreglo("insert", tamaño);
+        Ordenamiento ordenamiento = controlador.iniciarOrdenamientoArreglo("insert", tamaño);
+
+        System.out.println(ordenamiento.getComparaciones());
 
     }
 
