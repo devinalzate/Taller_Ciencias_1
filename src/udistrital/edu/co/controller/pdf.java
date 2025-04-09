@@ -7,85 +7,128 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import udistrital.edu.co.model.Politico;
 
 import java.io.IOException;
+import java.util.function.BiConsumer;
 
 public class pdf {
     public static void agregarContenidoAlPDF(PDDocument doc, Politico[] arr1, Politico[] arr2, Politico[][] matriz1, Politico[][] matriz2,
-                                             String[] algoritmos, long[][] datos1, long[][] datos2) throws IOException, IOException {
+                                              String[] algoritmos, long[][] datos1, long[][] datos2) throws IOException {
+
+        float margin = 50;
+        float leading = 20f;
+        float width = PDRectangle.LETTER.getWidth();
+        float height = PDRectangle.LETTER.getHeight();
+        float y = height - margin;
 
         PDPage pagina = new PDPage(PDRectangle.LETTER);
         doc.addPage(pagina);
 
         PDPageContentStream contenido = new PDPageContentStream(doc, pagina);
-        float margin = 50;
-        float width = pagina.getMediaBox().getWidth();
-        float height = pagina.getMediaBox().getHeight();
-        float y = height - margin;
-        float leading = 20f;
-
-        contenido.beginText();
         contenido.setFont(PDType1Font.HELVETICA, 12);
+        contenido.beginText();
         contenido.newLineAtOffset(margin, y);
 
+        // Método auxiliar para verificar y crear nueva página si no hay espacio suficiente
+        BiConsumer<PDDocument, PDPageContentStream[]> nuevaPaginaSiEsNecesario = (documento, contenedor) -> {
+            try {
+                contenedor[0].endText();
+                contenedor[0].close();
+                PDPage nuevaPagina = new PDPage(PDRectangle.LETTER);
+                doc.addPage(nuevaPagina);
+                PDPageContentStream nuevoContenido = new PDPageContentStream(doc, nuevaPagina);
+                nuevoContenido.setFont(PDType1Font.HELVETICA, 12);
+                nuevoContenido.beginText();
+                nuevoContenido.newLineAtOffset(margin, height - margin);
+                contenedor[0] = nuevoContenido;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
+
+        PDPageContentStream[] contenedor = new PDPageContentStream[]{contenido};
+
         contenido.showText("Arreglo 1:");
-        contenido.newLineAtOffset(0, -leading);
         y -= leading;
+        contenido.newLineAtOffset(0, -leading);
 
-        for (Politico linea : arr1) {
-            contenido.showText(String.valueOf(linea.getValor_a_robar()));
-            contenido.newLineAtOffset(0, -leading);
+        for (Politico p : arr1) {
+            if (y <= margin) {
+                y = height - margin;
+                nuevaPaginaSiEsNecesario.accept(doc, contenedor);
+                contenedor[0].newLineAtOffset(0, 0);
+            }
+            contenedor[0].showText(String.valueOf(p.getValor_a_robar()));
+            contenedor[0].newLineAtOffset(0, -leading);
             y -= leading;
         }
 
-        contenido.newLineAtOffset(0, -leading);
+        contenedor[0].showText("Arreglo ordenado:");
         y -= leading;
-        contenido.showText("Arreglo 2:");
-        contenido.newLineAtOffset(0, -leading);
-        y -= leading;
+        contenedor[0].newLineAtOffset(0, -leading);
 
-        for (Politico linea : arr2) {
-            contenido.showText(String.valueOf(linea.getValor_a_robar()));
-            contenido.newLineAtOffset(0, -leading);
+        for (Politico p : arr2) {
+            if (y <= margin) {
+                y = height - margin;
+                nuevaPaginaSiEsNecesario.accept(doc, contenedor);
+            }
+            contenedor[0].showText(String.valueOf(p.getValor_a_robar()));
+            contenedor[0].newLineAtOffset(0, -leading);
             y -= leading;
         }
 
-        contenido.newLineAtOffset(0, -leading);
+        contenedor[0].showText("Matriz 1:");
         y -= leading;
-        contenido.showText("Matriz 1:");
-        contenido.newLineAtOffset(0, -leading);
-        y -= leading;
+        contenedor[0].newLineAtOffset(0, -leading);
 
         for (Politico[] fila : matriz1) {
+            if (y <= margin) {
+                y = height - margin;
+                nuevaPaginaSiEsNecesario.accept(doc, contenedor);
+            }
+
             StringBuilder lineaTexto = new StringBuilder();
             for (int i = 0; i < fila.length; i++) {
-                lineaTexto.append(fila[i].getValor_a_robar());
+                if (fila[i] != null) {
+                    lineaTexto.append(fila[i].getValor_a_robar()).append(" ").append(fila[i].getEdad());
+                } else {
+                    lineaTexto.append("null");
+                }
                 if (i < fila.length - 1) lineaTexto.append(" | ");
             }
-            contenido.showText(lineaTexto.toString());
-            contenido.newLineAtOffset(0, -leading);
+
+            contenedor[0].showText(lineaTexto.toString());
+            contenedor[0].newLineAtOffset(0, -leading);
             y -= leading;
         }
 
-        contenido.newLineAtOffset(0, -leading);
+        contenedor[0].showText("Matriz ordenada:");
         y -= leading;
-        contenido.showText("Matriz 2:");
-        contenido.newLineAtOffset(0, -leading);
-        y -= leading;
+        contenedor[0].newLineAtOffset(0, -leading);
 
         for (Politico[] fila : matriz2) {
+            if (y <= margin) {
+                y = height - margin;
+                nuevaPaginaSiEsNecesario.accept(doc, contenedor);
+            }
+
             StringBuilder lineaTexto = new StringBuilder();
             for (int i = 0; i < fila.length; i++) {
-                lineaTexto.append(fila[i].getValor_a_robar());
+                if (fila[i] != null) {
+                    lineaTexto.append(fila[i].getValor_a_robar()).append(" ").append(fila[i].getEdad());
+                } else {
+                    lineaTexto.append("null");
+                }
                 if (i < fila.length - 1) lineaTexto.append(" | ");
             }
-            contenido.showText(lineaTexto.toString());
-            contenido.newLineAtOffset(0, -leading);
+
+            contenedor[0].showText(lineaTexto.toString());
+            contenedor[0].newLineAtOffset(0, -leading);
             y -= leading;
         }
 
-        contenido.endText();
-        contenido.close();
+        contenedor[0].endText();
+        contenedor[0].close();
 
-        // Crear una nueva página para las dos tablas
+        // Página con las tablas
         PDPage tablaPagina = new PDPage(PDRectangle.LETTER);
         doc.addPage(tablaPagina);
         PDPageContentStream tablaContenido = new PDPageContentStream(doc, tablaPagina);
@@ -158,4 +201,5 @@ public class pdf {
         tablaContenido.stroke();
         tablaContenido.close();
     }
+
 }

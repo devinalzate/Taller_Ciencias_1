@@ -124,16 +124,21 @@ public class controladorJP {
         Politico[][] matriz4 = matriz.clone();
         Politico[][] matriz5 = matriz.clone();
 
-        insert.ordenarArreglo(copia1, "dinero");
-        insert_matriz.ordenarMatriz(matriz1);
+       copia1= insert.ordenarArreglo(copia1, "dinero");
+      matriz1= insert_matriz.ordenarMatriz(matriz1);
+
         bubble.ordenarArreglo(copia2, "dinero");
         bubble_matriz.ordenarMatriz(matriz2);
+
         merge.ordenarArreglo(copia3, "dinero");
         merge_matriz.ordenarMatriz(matriz3);
+
         selection.ordenarArreglo(copia4, "dinero");
         selection_matriz.ordenarMatriz(matriz4);
+
         quick.ordenarArreglo(copia5, "dinero");
         quick_matriz.ordenarMatriz(matriz5);
+
 
 
         long[][] resultados = new long[5][3];
@@ -181,7 +186,7 @@ public class controladorJP {
         resultadosM[4][0] = quick_matriz.getTiempoEjecucion();
 
         // Devolver la copia ordenada (puede ser cualquiera) junto con los resultados
-        return new ResultadoComparacion(copia5, resultados, matriz5,resultadosM); // Usamos quick como referencia
+        return new ResultadoComparacion(copia1, resultados, matriz1,resultadosM); // Usamos quick como referencia
     }
 
 
@@ -196,12 +201,13 @@ public class controladorJP {
         ResultadoComparacion resultado = null;
         long[][] datos = null;
         long[][] datosM = null;
-        String[] headers = {"Algoritmo", "Tiempo", "Iteraciones", "Comparaciones"};
+        String[] headers = {"Burbuja", "Inserción", "Mezcla", "Selección", "Quick"};
 
         long[][] acumulados = new long[5][3];
         long[][] acumuladosM = new long[5][3];
         int repeticiones = 0;
-        while (tamaño <= 9) {
+
+        while (tamaño <= 1000) {
              // Para guardar la suma de comparaciones, movimientos, tiempo
             repeticiones += 1; // Para mayor precisión en el promedio
             arreglo = CreateArrayPoliticos(tamaño);
@@ -219,8 +225,26 @@ public class controladorJP {
             }
 
 
-            tamaño *= tasaCrecimiento; // Aumentar el tamaño con la tasa de crecimiento
+            tamaño = tamaño*tasaCrecimiento; // Aumentar el tamaño con la tasa de crecimiento
+
+            try {
+
+                pdf.agregarContenidoAlPDF(documentoGlobal, arreglo, resultado.getArregloOrdenado(), matriz, resultado.getMatrizOrdenada(), headers, datos, datosM);
+                documentoGlobal.save("documento.pdf");
+
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
+        try{
+        documentoGlobal.close();
+}catch (IOException e) {
+            e.printStackTrace();
+        }
+
         for (int j = 0; j < 5; j++) {
             for (int k = 0; k < 3; k++) {
                 if(repeticiones != 0){
@@ -230,17 +254,10 @@ public class controladorJP {
 
             }
         }
-        
-        RetornoComparaciones retorno = new RetornoComparaciones(acumulados, acumuladosM);
-        try {
-            pdf.agregarContenidoAlPDF(documentoGlobal, arreglo, resultado.getArregloOrdenado(), matriz, resultado.getMatrizOrdenada(), headers, datos, datosM);
-            documentoGlobal.save("porno.pdf");
-            documentoGlobal.close();
-            System.out.println("✅ PDF generado correctamente con múltiples secciones.");
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        RetornoComparaciones retorno = new RetornoComparaciones(acumulados, acumuladosM);
+
+
 
         return retorno;
     }
@@ -253,4 +270,5 @@ public class controladorJP {
             System.out.println();
         }
     }
+
 }

@@ -20,27 +20,24 @@ public class InsertionSortStrategy implements SortStrategy{
 
 
     @Override
-    public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
-        long inicio = System.currentTimeMillis();
 
-        // Crear copia de la lista base
+    public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
+        long inicio = System.nanoTime(); // Tiempo inicial en nanosegundos
+
         Politico[] copia = politicos.clone();
 
-        // Algoritmo de ordenamiento por inserción
-        if (criterio.equals("dinero")){
+        if (criterio.equals("dinero")) {
             for (int i = 1; i < copia.length; i++) {
                 Politico actual = copia[i];
                 int j = i - 1;
-                if (actual == null){
+                if (actual == null) {
                     break;
                 }
 
-
-                if(j >= 0 && (copia[j].getValor_a_robar() <= actual.getValor_a_robar())) {
+                if (j >= 0 && (copia[j].getValor_a_robar() <= actual.getValor_a_robar())) {
                     comparaciones++;
                 }
 
-                // Desplazamiento hacia la derecha de los elementos mayores
                 while (j >= 0 && (copia[j].getValor_a_robar() > actual.getValor_a_robar())) {
                     copia[j + 1] = copia[j];
                     j--;
@@ -49,42 +46,42 @@ public class InsertionSortStrategy implements SortStrategy{
                 }
 
                 copia[j + 1] = actual;
-
             }
         }
 
-        if (criterio.equals("edad")){
+        if (criterio.equals("edad")) {
             for (int i = 1; i < copia.length; i++) {
                 Politico actual = copia[i];
                 int j = i - 1;
                 movimientos++;
 
-                if (actual == null){
+                if (actual == null) {
                     break;
                 }
 
-                while (j >= 0 && (copia[j].getValor_a_robar() < actual.getValor_a_robar())) {
+                if (j >= 0 && (copia[j].getEdad() <= actual.getEdad())) {
                     comparaciones++;
                 }
 
-                // Desplazamiento hacia la derecha de los elementos mayores
                 while (j >= 0 && (copia[j].getEdad() > actual.getEdad())) {
                     copia[j + 1] = copia[j];
                     j--;
                     movimientos++;
                     comparaciones++;
                 }
+
                 copia[j + 1] = actual;
             }
         }
-        tiempoEjecucion = System.currentTimeMillis() - inicio;
+
+        tiempoEjecucion = (System.nanoTime() - inicio) / 1000; // Microsegundos
         return copia;
     }
 
     @Override
     public Politico[][] ordenarMatriz(Politico[][] matriz) {
+        long inicio = System.nanoTime(); // Tiempo inicial en nanosegundos
 
-        long inicio = System.currentTimeMillis();
         Politico[][] matriz_copia = matriz.clone();
         int filas = matriz_copia.length;
         int columnas = matriz_copia[0].length;
@@ -120,14 +117,16 @@ public class InsertionSortStrategy implements SortStrategy{
                         movimientos_matriz++;
                         comparaciones_matriz++;
                     }
+
                     matriz_copia[i][k + 1] = politico;
                 }
             }
         }
 
-        tiempoEjecucion_matriz = System.currentTimeMillis() - inicio;
+        tiempoEjecucion_matriz = (System.nanoTime() - inicio) / 1000; // Microsegundos
         return matriz_copia;
     }
+
 
     @Override
     public int getComparaciones() {

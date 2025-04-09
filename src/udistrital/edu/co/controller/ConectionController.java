@@ -37,7 +37,8 @@ public class ConectionController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int valor = Integer.parseInt(vista.getTxtTamano());
-                calcular(valor);
+                int factor =vista.getTxtFactor();
+                calcular(valor, factor);
                 vista.copiarTabla();
             }
         });
@@ -60,27 +61,15 @@ public class ConectionController {
         });
     }
 
-    public void calcular(int tamaño){
-      /*  Politico[] inicial = controlador.CreateArrayPoliticos(tamaño);
+    public void calcular(int tamaño, int crecimiento){
 
-        Politico[] inversa = controlador.CreateArrayPoliticosOrdenInverso(tamaño);
-
-        controla.printPoliticos(inversa);
-
-        ResultadoComparacion resultado = controlador.CreateArrayPoliticos(inicial);
-
-        long[][] estadisticas = resultado.getEstadisticas();
-        return estadisticas;
-
-       */
-        RetornoComparaciones resultados = controlador.realizarComparacionesCrecientes(tamaño, 2);
+        RetornoComparaciones resultados = controlador.realizarComparacionesCrecientes(tamaño, crecimiento);
         acumulaciones = resultados.getAcumulaciones();
         acumulacionesM = resultados.getAcumulacionesM();
 
         // Mostrar por defecto uno (ej. el arreglo)
         vista.llenarTabla(acumulaciones);
-        controlador.imprimirMatriz(resultados.getAcumulaciones());
-        controlador.imprimirMatriz(resultados.getAcumulacionesM());
+
 
 
     }

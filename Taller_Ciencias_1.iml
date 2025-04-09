@@ -10,22 +10,58 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../pdf/pdfbox-tools-2.0.19.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../pdf/pdfbox-2.0.19.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../pdf/fontbox-2.0.19.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../pdf/commons-logging-1.2.jar!/" />
-          <root url="file://$MODULE_DIR$/../.." />
+          <root url="jar://$USER_HOME$/pdf/pdfbox-tools-2.0.19.jar!/" />
+          <root url="jar://$USER_HOME$/pdf/pdfbox-2.0.19.jar!/" />
+          <root url="jar://$USER_HOME$/pdf/fontbox-2.0.19.jar!/" />
+          <root url="jar://$USER_HOME$/pdf/commons-logging-1.2.jar!/" />
+          <root url="file://$USER_HOME$" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$MODULE_DIR$/../../Taller_Ciencias1_java/Taller_Ciencias_1/src" />
-          <root url="file://$MODULE_DIR$/../../Taller_Ciencias_1/Taller_Ciencias_1/src" />
-          <root url="file://$MODULE_DIR$/../../Taller_Listas_Enlazadas/Ejercicio1_listas_enlazadas/puebloNB/src/main/java" />
-          <root url="file://$MODULE_DIR$/../../Taller_Listas_Enlazadas/Listas Enlazadas/Lista_Enlazada/src/main/java" />
-          <root url="file://$MODULE_DIR$/../../Universidad/Modelos de programación/HOLA/Modelos - Factory method/src" />
-          <root url="file://$MODULE_DIR$/../../Universidad/Modelos de programación/xddd/Modelos_Factory_Figuras/src" />
+          <root url="file://$USER_HOME$/Taller_Ciencias1_java/Taller_Ciencias_1/src" />
+          <root url="file://$USER_HOME$/Taller_Ciencias_1/Taller_Ciencias_1/src" />
+          <root url="file://$USER_HOME$/Taller_Listas_Enlazadas/Ejercicio1_listas_enlazadas/puebloNB/src/main/java" />
+          <root url="file://$USER_HOME$/Taller_Listas_Enlazadas/Listas Enlazadas/Lista_Enlazada/src/main/java" />
+          <root url="file://$USER_HOME$/Universidad/Modelos de programación/HOLA/Modelos - Factory method/src" />
+          <root url="file://$USER_HOME$/Universidad/Modelos de programación/xddd/Modelos_Factory_Figuras/src" />
           <root url="file://$MODULE_DIR$/src" />
         </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/OneDrive/Desktop/pdf/pdfbox-2.0.19.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/OneDrive/Desktop/pdf/commons-logging-1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/OneDrive/Desktop/pdf/fontbox-2.0.19.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/OneDrive/Desktop/pdf/pdfbox-tools-2.0.19.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
   </component>

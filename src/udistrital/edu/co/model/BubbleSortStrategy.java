@@ -17,14 +17,13 @@ public class BubbleSortStrategy implements SortStrategy {
      * También guarda el número de intercambios realizados y el tiempo total de ejecución en milisegundos.
      */
 
+
     @Override
     public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
-        long inicio = System.currentTimeMillis(); // Tiempo inicial
+        long inicio = System.nanoTime(); // Tiempo inicial en nanosegundos
 
-        // Crear copia de la lista base
         Politico[] politicos_copia = politicos.clone();
 
-        // Algoritmo de ordenamiento de burbuja
         if (criterio.equals("dinero")){
             for (int i = 0; i < politicos_copia.length - 1; i++) {
                 for (int j = 0; j < politicos_copia.length - i - 1; j++) {
@@ -55,14 +54,13 @@ public class BubbleSortStrategy implements SortStrategy {
             }
         }
 
-        tiempoEjecucion_matriz = System.currentTimeMillis() - inicio;
+        tiempoEjecucion_matriz = (System.nanoTime() - inicio) / 1000; // En microsegundos
         return politicos_copia;
-
     }
 
     @Override
     public Politico[][] ordenarMatriz(Politico[][] matriz) {
-        long inicio = System.currentTimeMillis();
+        long inicio = System.nanoTime(); // Tiempo inicial en nanosegundos
         Politico[][] matriz_copia = matriz.clone();
         int filas = matriz_copia.length;
         int columnas = matriz_copia[0].length;
@@ -73,18 +71,14 @@ public class BubbleSortStrategy implements SortStrategy {
         comparaciones_matriz = getComparaciones();
         movimientos_matriz = getMovimientos();
 
-
         matriz_copia = SortStrategy.convertirAMatriz(arreglo_ordenado, columnas);
 
-
-        // 1. Ordenar filas por valor_a_robar (burbuja)
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas - 1; j++) {
                 for (int k = 0; k < columnas - j - 1; k++) {
                     comparaciones_matriz += 1;
                     if (matriz_copia[i][k] != null && matriz_copia[i][k + 1] != null) {
                         if (matriz_copia[i][k].getValor_a_robar() > matriz_copia[i][k + 1].getValor_a_robar()) {
-                            // Intercambiar
                             Politico temp = matriz_copia[i][k];
                             matriz_copia[i][k] = matriz_copia[i][k + 1];
                             matriz_copia[i][k + 1] = temp;
@@ -95,9 +89,10 @@ public class BubbleSortStrategy implements SortStrategy {
             }
         }
 
-        tiempoEjecucion = System.currentTimeMillis() - inicio;
+        tiempoEjecucion = (System.nanoTime() - inicio) / 1000; // En microsegundos
         return matriz_copia;
     }
+
 
     @Override
     public int getComparaciones() {
