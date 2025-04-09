@@ -5,6 +5,10 @@ public class BubbleSortStrategy implements SortStrategy {
     private int movimientos = 0;
     private long tiempoEjecucion = 0;
 
+    private int comparaciones_matriz = 0;
+    private int movimientos_matriz = 0;
+    private long tiempoEjecucion_matriz = 0;
+
     /**
      * Método para ordenar una lista de políticos utilizando el algoritmo de burbuja (Bubble Sort).
      *
@@ -63,10 +67,12 @@ public class BubbleSortStrategy implements SortStrategy {
         int filas = matriz_copia.length;
         int columnas = matriz_copia[0].length;
 
-
         Politico[] arreglo = SortStrategy.unirFilas(matriz_copia);
 
         Politico[] arreglo_ordenado = ordenarArreglo(arreglo, "edad");
+        comparaciones_matriz = getComparaciones();
+        movimientos_matriz = getMovimientos();
+
 
         matriz_copia = SortStrategy.convertirAMatriz(arreglo_ordenado, columnas);
 
@@ -104,5 +110,17 @@ public class BubbleSortStrategy implements SortStrategy {
     @Override
     public long getTiempoEjecucion() {
         return this.tiempoEjecucion;
+    }
+
+    public int getComparaciones_matriz() {
+        return comparaciones_matriz;
+    }
+
+    public int getMovimientos_matriz() {
+        return movimientos_matriz;
+    }
+
+    public long getTiempoEjecucion_matriz() {
+        return tiempoEjecucion_matriz;
     }
 }
