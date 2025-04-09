@@ -3,6 +3,7 @@ package udistrital.edu.co.controller;
 import udistrital.edu.co.model.Ordenamiento;
 import udistrital.edu.co.model.Politico;
 import udistrital.edu.co.model.ResultadoComparacion;
+import udistrital.edu.co.model.RetornoComparaciones;
 import udistrital.edu.co.view.ComparacionAlgoritmos;
 
 import javax.swing.event.ChangeEvent;
@@ -14,6 +15,8 @@ public class ConectionController {
     private ComparacionAlgoritmos vista;
     private controladorJP controlador;
     private ControllerPrueba controla;
+    private long[][] acumulaciones;
+    private long[][] acumulacionesM;
 
 
     public ConectionController(ComparacionAlgoritmos vista) {
@@ -44,9 +47,15 @@ public class ConectionController {
             @Override
             public void stateChanged(ChangeEvent e) {
                 int index = vista.getTabbedPane().getSelectedIndex();
-                if (vista.getTabbedPane().getTitleAt(index).equals("Matriz")) {
-                    vista.copiarTabla();
+                String titulo = vista.getTabbedPane().getTitleAt(index);
+
+                if (titulo.equals("Matriz")) {
+                    vista.llenarTabla(acumulacionesM); // matriz acumulada
+                } else if (titulo.equals("Arreglo")) {
+                    vista.llenarTabla(acumulaciones); // resultados normales
                 }
+
+                vista.copiarTabla(); // si necesitas copiar los datos visibles a otro lugar
             }
         });
     }
@@ -64,10 +73,17 @@ public class ConectionController {
         return estadisticas;
 
        */
-        long[][] matriz = controlador.realizarComparacionesCrecientes(tamaño, 2);
-        controlador.imprimirMatriz(matriz);
-        vista.llenarTabla(matriz);
+        RetornoComparaciones resultados = controlador.realizarComparacionesCrecientes(tamaño, 2);
+        acumulaciones = resultados.getAcumulaciones();
+        acumulacionesM = resultados.getAcumulacionesM();
+
+        // Mostrar por defecto uno (ej. el arreglo)
+        vista.llenarTabla(acumulaciones);
+        controlador.imprimirMatriz(resultados.getAcumulaciones());
+        controlador.imprimirMatriz(resultados.getAcumulacionesM());
+
 
     }
+
 
 }

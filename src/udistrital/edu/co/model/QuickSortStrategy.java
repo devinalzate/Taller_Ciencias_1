@@ -5,6 +5,11 @@ public class QuickSortStrategy implements SortStrategy{
     private int movimientos = 0;
     private long tiempoEjecucion = 0;
 
+
+    private int comparaciones_matriz = 0;
+    private int movimientos_matriz = 0;
+    private long tiempoEjecucion_matriz = 0;
+
     @Override
     public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
         long inicio = System.currentTimeMillis();
@@ -12,7 +17,6 @@ public class QuickSortStrategy implements SortStrategy{
         quickSort(politicos_copia, 0, politicos_copia.length - 1, criterio);
         tiempoEjecucion = System.currentTimeMillis() - inicio;
         return politicos_copia;
-
     }
 
     private void quickSort(Politico[] arr, int low, int high,String criterio) {
@@ -28,23 +32,26 @@ public class QuickSortStrategy implements SortStrategy{
         if (criterio.equals("edad")) {
             double pivot = arr[high].getEdad();
 
-
             for (int j = low; j < high; j++) {
                 comparaciones++;
                 if (arr[j].getEdad() <= pivot) {
                     i++;
 
-                    Politico temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                    movimientos++;
+                    if (i != j) { // Solo intercambiar si son diferentes
+                        Politico temp = arr[i];
+                        arr[i] = arr[j];
+                        arr[j] = temp;
+                        movimientos++;
+                    }
                 }
             }
 
-            Politico temp = arr[i + 1];
-            arr[i + 1] = arr[high];
-            arr[high] = temp;
-            movimientos++;
+            if ((i + 1) != high) { // Solo intercambiar si son diferentes
+                Politico temp = arr[i + 1];
+                arr[i + 1] = arr[high];
+                arr[high] = temp;
+                movimientos++;
+            }
         }
         if (criterio.equals("dinero")) {
             double pivot = arr[high].getValor_a_robar();
@@ -55,18 +62,22 @@ public class QuickSortStrategy implements SortStrategy{
                 if (arr[j].getValor_a_robar() <= pivot) {
                     i++;
 
-                    Politico temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                    movimientos++;
+                    if (i != j) { // Solo intercambiar si son diferentes
+                        Politico temp = arr[i];
+                        arr[i] = arr[j];
+                        arr[j] = temp;
+                        movimientos++;
+                    }
                 }
             }
 
+            if ((i + 1) != high) { // Solo intercambiar si son diferentes
+                Politico temp = arr[i + 1];
+                arr[i + 1] = arr[high];
+                arr[high] = temp;
+                movimientos++;
+            }
 
-            Politico temp = arr[i + 1];
-            arr[i + 1] = arr[high];
-            arr[high] = temp;
-            movimientos++;
         }
         return i+1;
     }
@@ -88,7 +99,11 @@ public class QuickSortStrategy implements SortStrategy{
             matriz_copia[i] = ordenarArreglo(matriz_copia[i], "dinero");
         }
 
-        tiempoEjecucion = System.currentTimeMillis() - inicio;
+
+        comparaciones_matriz = getComparaciones();
+        movimientos_matriz = getMovimientos();
+
+        tiempoEjecucion_matriz = System.currentTimeMillis() - inicio;
         return matriz_copia;
     }
 
@@ -105,5 +120,17 @@ public class QuickSortStrategy implements SortStrategy{
     @Override
     public long getTiempoEjecucion() {
         return this.tiempoEjecucion;
+    }
+
+    public int getComparaciones_matriz() {
+        return comparaciones_matriz;
+    }
+
+    public int getMovimientos_matriz() {
+        return movimientos_matriz;
+    }
+
+    public long getTiempoEjecucion_matriz() {
+        return tiempoEjecucion_matriz;
     }
 }

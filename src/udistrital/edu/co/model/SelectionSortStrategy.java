@@ -1,14 +1,16 @@
 package udistrital.edu.co.model;
 
 public class SelectionSortStrategy implements SortStrategy {
-    private int comparaciones;
-    private int movimientos;
-    private long tiempoEjecucion;
+    private int comparaciones = 0;
+    private int movimientos = 0;
+    private long tiempoEjecucion = 0;
 
+
+    private int comparaciones_matriz = 0;
+    private int movimientos_matriz = 0;
+    private long tiempoEjecucion_matriz = 0;
     @Override
     public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
-        movimientos = 0;
-        comparaciones = 0;
         long tiempoInicial = System.nanoTime();
 
         Politico[] politicos_copia = politicos.clone();
@@ -18,9 +20,12 @@ public class SelectionSortStrategy implements SortStrategy {
                 int minimo = i;
                 for (int j = i + 1; j < n; j++) {
                     comparaciones++;
-                    if (politicos_copia[j].getValor_a_robar() < politicos_copia[minimo].getValor_a_robar()) {
-                        minimo = j;
+                    if(politicos_copia[j] != null){
+                        if (politicos_copia[j].getValor_a_robar() < politicos_copia[minimo].getValor_a_robar()) {
+                            minimo = j;
+                        }
                     }
+
                 }
 
                 if (minimo != i) {
@@ -36,9 +41,12 @@ public class SelectionSortStrategy implements SortStrategy {
                 int minimo = i;
                 for (int j = i + 1; j < n; j++) {
                     comparaciones++;
-                    if (politicos_copia[j].getEdad() < politicos_copia[minimo].getEdad()) {
-                        minimo = j;
+                    if(politicos_copia[j] != null){
+                        if (politicos_copia[j].getEdad() < politicos_copia[minimo].getEdad()) {
+                            minimo = j;
+                        }
                     }
+
                 }
 
                 if (minimo != i) {
@@ -72,8 +80,10 @@ public class SelectionSortStrategy implements SortStrategy {
         for (int i = 0; i < matriz_copia.length; i++) {
             matriz_copia[i] = ordenarArreglo(matriz_copia[i], "dinero");
         }
+        comparaciones_matriz = getComparaciones();
+        movimientos_matriz = getMovimientos();
 
-        tiempoEjecucion = System.currentTimeMillis() - inicio;
+        tiempoEjecucion_matriz = System.currentTimeMillis() - inicio;
         return matriz_copia;
     }
 
@@ -90,5 +100,17 @@ public class SelectionSortStrategy implements SortStrategy {
     @Override
     public long getTiempoEjecucion() {
         return this.tiempoEjecucion;
+    }
+
+    public int getComparaciones_matriz() {
+        return comparaciones_matriz;
+    }
+
+    public int getMovimientos_matriz() {
+        return movimientos_matriz;
+    }
+
+    public long getTiempoEjecucion_matriz() {
+        return tiempoEjecucion_matriz;
     }
 }
