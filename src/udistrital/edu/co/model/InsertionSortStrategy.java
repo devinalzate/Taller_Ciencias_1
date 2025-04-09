@@ -5,6 +5,9 @@ public class InsertionSortStrategy implements SortStrategy{
     private int movimientos = 0;
     private long tiempoEjecucion = 0;
 
+    private int comparaciones_matriz = 0;
+    private int movimientos_matriz = 0;
+    private long tiempoEjecucion_matriz = 0;
     /**
      * Método para ordenar una lista de políticos utilizando el algoritmo de ordenamiento por inserción (Insertion Sort).
      *
@@ -56,10 +59,15 @@ public class InsertionSortStrategy implements SortStrategy{
                     break;
                 }
 
+                while (j >= 0 && (copia[j].getValor_a_robar() < actual.getValor_a_robar())) {
+                    comparaciones++;
+                }
+
                 // Desplazamiento hacia la derecha de los elementos mayores
                 while (j >= 0 && (copia[j].getEdad() > actual.getEdad())) {
                     copia[j + 1] = copia[j];
                     j--;
+                    movimientos++;
                     comparaciones++;
                 }
                 copia[j + 1] = actual;
@@ -81,6 +89,9 @@ public class InsertionSortStrategy implements SortStrategy{
 
         Politico[] arreglo_ordenado = ordenarArreglo(arreglo, "edad");
 
+        comparaciones_matriz = getComparaciones();
+        movimientos_matriz = getMovimientos();
+
         matriz_copia = SortStrategy.convertirAMatriz(arreglo_ordenado, columnas);
 
         int maxDimension = Math.max(filas, columnas);
@@ -94,16 +105,23 @@ public class InsertionSortStrategy implements SortStrategy{
                     if (politico == null) {
                         break;
                     }
+
+                    if (j >= 0 && (matriz_copia[i][k].getValor_a_robar() <= politico.getValor_a_robar())) {
+                        comparaciones_matriz++;
+                    }
+
                     while (k >= 0 && matriz_copia[i][k].getValor_a_robar() > politico.getValor_a_robar()) {
                         matriz_copia[i][k + 1] = matriz_copia[i][k];
                         k--;
+                        movimientos_matriz++;
+                        comparaciones_matriz++;
                     }
                     matriz_copia[i][k + 1] = politico;
                 }
             }
         }
 
-        tiempoEjecucion = System.currentTimeMillis() - inicio;
+        tiempoEjecucion_matriz = System.currentTimeMillis() - inicio;
         return matriz_copia;
     }
 
@@ -120,5 +138,17 @@ public class InsertionSortStrategy implements SortStrategy{
     @Override
     public long getTiempoEjecucion() {
         return this.tiempoEjecucion;
+    }
+
+    public int getComparaciones_matriz() {
+        return comparaciones_matriz;
+    }
+
+    public int getMovimientos_matriz() {
+        return movimientos_matriz;
+    }
+
+    public long getTiempoEjecucion_matriz() {
+        return tiempoEjecucion_matriz;
     }
 }

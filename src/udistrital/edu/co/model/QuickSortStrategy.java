@@ -5,6 +5,11 @@ public class QuickSortStrategy implements SortStrategy{
     private int movimientos = 0;
     private long tiempoEjecucion = 0;
 
+
+    private int comparaciones_matriz = 0;
+    private int movimientos_matriz = 0;
+    private long tiempoEjecucion_matriz = 0;
+
     @Override
     public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
         long inicio = System.currentTimeMillis();
@@ -12,7 +17,6 @@ public class QuickSortStrategy implements SortStrategy{
         quickSort(politicos_copia, 0, politicos_copia.length - 1, criterio);
         tiempoEjecucion = System.currentTimeMillis() - inicio;
         return politicos_copia;
-
     }
 
     private void quickSort(Politico[] arr, int low, int high,String criterio) {
@@ -88,7 +92,11 @@ public class QuickSortStrategy implements SortStrategy{
             matriz_copia[i] = ordenarArreglo(matriz_copia[i], "dinero");
         }
 
-        tiempoEjecucion = System.currentTimeMillis() - inicio;
+
+        comparaciones_matriz = getComparaciones();
+        movimientos_matriz = getMovimientos();
+
+        tiempoEjecucion_matriz = System.currentTimeMillis() - inicio;
         return matriz_copia;
     }
 
@@ -105,5 +113,17 @@ public class QuickSortStrategy implements SortStrategy{
     @Override
     public long getTiempoEjecucion() {
         return this.tiempoEjecucion;
+    }
+
+    public int getComparaciones_matriz() {
+        return comparaciones_matriz;
+    }
+
+    public int getMovimientos_matriz() {
+        return movimientos_matriz;
+    }
+
+    public long getTiempoEjecucion_matriz() {
+        return tiempoEjecucion_matriz;
     }
 }

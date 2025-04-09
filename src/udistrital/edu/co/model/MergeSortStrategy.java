@@ -5,6 +5,10 @@ public class MergeSortStrategy implements SortStrategy {
     private int movimientos = 0;
     private long tiempoEjecucion = 0;
 
+    private int comparaciones_matriz = 0;
+    private int movimientos_matriz = 0;
+    private long tiempoEjecucion_matriz = 0;
+
     @Override
     public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
         return mergeSortPoliticos(politicos,0 ,politicos.length-1,criterio );
@@ -26,8 +30,10 @@ public class MergeSortStrategy implements SortStrategy {
         for (int i = 0; i < matriz_copia.length; i++) {
             matriz_copia[i] = mergeSortPoliticos(matriz_copia[i], 0, matriz[i].length - 1, "dinero");
         }
+        comparaciones_matriz = getComparaciones();
+        movimientos_matriz = getMovimientos();
 
-        tiempoEjecucion = System.currentTimeMillis() - inicio;
+        tiempoEjecucion_matriz = System.currentTimeMillis() - inicio;
         return matriz_copia;
     }
 
@@ -134,5 +140,17 @@ public class MergeSortStrategy implements SortStrategy {
     @Override
     public long getTiempoEjecucion() {
         return this.tiempoEjecucion;
+    }
+
+    public int getComparaciones_matriz() {
+        return comparaciones_matriz;
+    }
+
+    public int getMovimientos_matriz() {
+        return movimientos_matriz;
+    }
+
+    public long getTiempoEjecucion_matriz() {
+        return tiempoEjecucion_matriz;
     }
 }

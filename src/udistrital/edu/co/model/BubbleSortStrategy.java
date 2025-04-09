@@ -55,7 +55,7 @@ public class BubbleSortStrategy implements SortStrategy {
             }
         }
 
-        tiempoEjecucion = System.currentTimeMillis() - inicio;
+        tiempoEjecucion_matriz = System.currentTimeMillis() - inicio;
         return politicos_copia;
 
     }
@@ -81,12 +81,14 @@ public class BubbleSortStrategy implements SortStrategy {
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas - 1; j++) {
                 for (int k = 0; k < columnas - j - 1; k++) {
+                    comparaciones_matriz += 1;
                     if (matriz_copia[i][k] != null && matriz_copia[i][k + 1] != null) {
                         if (matriz_copia[i][k].getValor_a_robar() > matriz_copia[i][k + 1].getValor_a_robar()) {
                             // Intercambiar
                             Politico temp = matriz_copia[i][k];
                             matriz_copia[i][k] = matriz_copia[i][k + 1];
                             matriz_copia[i][k + 1] = temp;
+                            movimientos_matriz += 1;
                         }
                     }
                 }
