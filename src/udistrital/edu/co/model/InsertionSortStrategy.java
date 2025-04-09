@@ -1,7 +1,5 @@
 package udistrital.edu.co.model;
 
-import udistrital.edu.co.controller.ControllerPrueba;
-
 public class InsertionSortStrategy implements SortStrategy{
     private int comparaciones = 0;
     private int movimientos = 0;

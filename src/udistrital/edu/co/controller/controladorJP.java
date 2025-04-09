@@ -207,7 +207,7 @@ public class controladorJP {
         long[][] acumuladosM = new long[5][3];
         int repeticiones = 0;
 
-        while (tamaño <= 1000) {
+        while (tamaño <= 10000) {
              // Para guardar la suma de comparaciones, movimientos, tiempo
             repeticiones += 1; // Para mayor precisión en el promedio
             arreglo = CreateArrayPoliticos(tamaño);
