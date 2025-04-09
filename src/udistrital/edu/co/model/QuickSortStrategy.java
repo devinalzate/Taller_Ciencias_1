@@ -32,23 +32,26 @@ public class QuickSortStrategy implements SortStrategy{
         if (criterio.equals("edad")) {
             double pivot = arr[high].getEdad();
 
-
             for (int j = low; j < high; j++) {
                 comparaciones++;
                 if (arr[j].getEdad() <= pivot) {
                     i++;
 
-                    Politico temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                    movimientos++;
+                    if (i != j) { // Solo intercambiar si son diferentes
+                        Politico temp = arr[i];
+                        arr[i] = arr[j];
+                        arr[j] = temp;
+                        movimientos++;
+                    }
                 }
             }
 
-            Politico temp = arr[i + 1];
-            arr[i + 1] = arr[high];
-            arr[high] = temp;
-            movimientos++;
+            if ((i + 1) != high) { // Solo intercambiar si son diferentes
+                Politico temp = arr[i + 1];
+                arr[i + 1] = arr[high];
+                arr[high] = temp;
+                movimientos++;
+            }
         }
         if (criterio.equals("dinero")) {
             double pivot = arr[high].getValor_a_robar();
@@ -59,18 +62,22 @@ public class QuickSortStrategy implements SortStrategy{
                 if (arr[j].getValor_a_robar() <= pivot) {
                     i++;
 
-                    Politico temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                    movimientos++;
+                    if (i != j) { // Solo intercambiar si son diferentes
+                        Politico temp = arr[i];
+                        arr[i] = arr[j];
+                        arr[j] = temp;
+                        movimientos++;
+                    }
                 }
             }
 
+            if ((i + 1) != high) { // Solo intercambiar si son diferentes
+                Politico temp = arr[i + 1];
+                arr[i + 1] = arr[high];
+                arr[high] = temp;
+                movimientos++;
+            }
 
-            Politico temp = arr[i + 1];
-            arr[i + 1] = arr[high];
-            arr[high] = temp;
-            movimientos++;
         }
         return i+1;
     }

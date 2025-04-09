@@ -1,5 +1,7 @@
 package udistrital.edu.co.model;
 
+import udistrital.edu.co.controller.ControllerPrueba;
+
 public class InsertionSortStrategy implements SortStrategy{
     private int comparaciones = 0;
     private int movimientos = 0;
@@ -33,7 +35,8 @@ public class InsertionSortStrategy implements SortStrategy{
                     break;
                 }
 
-                while (j >= 0 && (copia[j].getValor_a_robar() < actual.getValor_a_robar())) {
+
+                if(j >= 0 && (copia[j].getValor_a_robar() <= actual.getValor_a_robar())) {
                     comparaciones++;
                 }
 
@@ -44,6 +47,7 @@ public class InsertionSortStrategy implements SortStrategy{
                     movimientos++;
                     comparaciones++;
                 }
+
                 copia[j + 1] = actual;
 
             }

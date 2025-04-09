@@ -30,6 +30,18 @@ public class controladorJP {
         return politicos;
     }
 
+    public Politico[] CreateArrayPoliticosOrdenado(int n) {
+        Politico[] politicos = new Politico[n];
+        for (int i = 0; i < n; i++) {
+            Politico politico = new Politico();
+            politico.setId(i); // Asignar un ID único
+            politico.setEdad((int) (Math.floor(Math.random() * (60 + 1)) + 20)); // Edad aleatoria
+            politico.setValor_a_robar((n) * 2); // Valor a robar aleatorio
+            politicos[i] = politico; // Añadir el político a la lista
+        }
+        return politicos;
+    }
+
     public Politico[] CreateArrayPoliticosOrdenInverso(int n) {
         Politico[] politicos = new Politico[n];
         for (int i = 0; i < n; i++) {
@@ -155,10 +167,10 @@ public class controladorJP {
 
         long[][] acumulados = new long[5][3];
         int repeticiones = 0;
-        while (tamaño <= 100) {
+        while (tamaño <= 5) {
              // Para guardar la suma de comparaciones, movimientos, tiempo
             repeticiones += 1; // Para mayor precisión en el promedio
-            Politico[] arreglo = CreateArrayPoliticosOrdenInverso(tamaño);
+            Politico[] arreglo = CreateArrayPoliticosOrdenado(tamaño);
             ResultadoComparacion resultado = OrdenamientoPoliticos(arreglo);
             long[][] datos = resultado.getEstadisticas();
 
