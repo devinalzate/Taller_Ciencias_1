@@ -1,9 +1,9 @@
 package udistrital.edu.co.model;
 
 public class SelectionSortStrategy implements SortStrategy {
-    private int comparaciones;
-    private int movimientos;
-    private long tiempoEjecucion;
+    private int comparaciones = 0;
+    private int movimientos = 0;
+    private long tiempoEjecucion = 0;
 
 
     private int comparaciones_matriz = 0;
@@ -11,8 +11,6 @@ public class SelectionSortStrategy implements SortStrategy {
     private long tiempoEjecucion_matriz = 0;
     @Override
     public Politico[] ordenarArreglo(Politico[] politicos, String criterio) {
-        movimientos = 0;
-        comparaciones = 0;
         long tiempoInicial = System.nanoTime();
 
         Politico[] politicos_copia = politicos.clone();

@@ -8,15 +8,25 @@ public class controladorJP {
     private MergeSortStrategy merge;
     private SelectionSortStrategy selection;
     private QuickSortStrategy quick;
-    private Ordenamiento valores;
+
+    private InsertionSortStrategy insert_matriz;
+    private BubbleSortStrategy bubble_matriz;
+    private MergeSortStrategy merge_matriz;
+    private SelectionSortStrategy selection_matriz;
+    private QuickSortStrategy quick_matriz;
 
     public controladorJP(){
-        valores = new Ordenamiento();
         insert = new InsertionSortStrategy();
         bubble = new BubbleSortStrategy();
         merge = new MergeSortStrategy();
         selection = new SelectionSortStrategy();
         quick = new QuickSortStrategy();
+
+        insert_matriz = new InsertionSortStrategy();
+        bubble_matriz = new BubbleSortStrategy();
+        merge_matriz =  new MergeSortStrategy();
+        selection_matriz = new SelectionSortStrategy();
+        quick_matriz = new QuickSortStrategy();
     }
 
     public Politico[] CreateArrayPoliticos(int n) {
@@ -49,18 +59,6 @@ public class controladorJP {
             politico.setId(i); // Asignar un ID único
             politico.setEdad((int) (Math.floor(Math.random() * (60 + 1)) + 20)); // Edad aleatoria
             politico.setValor_a_robar((n - i) * 2); // Valor a robar aleatorio
-            politicos[i] = politico; // Añadir el político a la lista
-        }
-        return politicos;
-    }
-
-    public Politico[] CreateArrayPoliticosOrdenado(int n) {
-        Politico[] politicos = new Politico[n];
-        for (int i = 0; i < n; i++) {
-            Politico politico = new Politico();
-            politico.setId(i); // Asignar un ID único
-            politico.setEdad((int) (Math.floor(Math.random() * (60 + 1)) + 20)); // Edad aleatoria
-            politico.setValor_a_robar((n) * 2); // Valor a robar aleatorio
             politicos[i] = politico; // Añadir el político a la lista
         }
         return politicos;
@@ -108,26 +106,33 @@ public class controladorJP {
         return matrizPoliticos;
     }
 
-    public ResultadoComparacion OrdenamientoPoliticos(Politico[] politicos) {
+    public ResultadoComparacion OrdenamientoPoliticos(Politico[] politicos, Politico[][] matriz) {
         Politico[] copia1 = politicos.clone();
         Politico[] copia2 = politicos.clone();
         Politico[] copia3 = politicos.clone();
         Politico[] copia4 = politicos.clone();
         Politico[] copia5 = politicos.clone();
 
-        Politico[][] matriz1 = CreateMatriz(politicos);
+        Politico[][] matriz1 = matriz.clone();
+        Politico[][] matriz2 = matriz.clone();
+        Politico[][] matriz3 = matriz.clone();
+        Politico[][] matriz4 = matriz.clone();
+        Politico[][] matriz5 = matriz.clone();
 
         insert.ordenarArreglo(copia1, "dinero");
-        insert.ordenarMatriz(matriz1);
+        insert_matriz.ordenarMatriz(matriz1);
         bubble.ordenarArreglo(copia2, "dinero");
+        bubble_matriz.ordenarMatriz(matriz2);
         merge.ordenarArreglo(copia3, "dinero");
-        merge.ordenarMatriz(matriz1);
+        merge_matriz.ordenarMatriz(matriz3);
         selection.ordenarArreglo(copia4, "dinero");
+        selection_matriz.ordenarMatriz(matriz4);
         quick.ordenarArreglo(copia5, "dinero");
-        System.out.println("Comparaciones en la matriz: " + insert.getComparaciones_matriz());
-        System.out.println("Movimientos en la matriz: " + insert.getMovimientos_matriz());
+        quick_matriz.ordenarMatriz(matriz5);
+
 
         long[][] resultados = new long[5][3];
+        long[][] resultadosM = new long[5][3];
 
         resultados[0][2] = bubble.getComparaciones();
         resultados[0][1] = bubble.getMovimientos();
@@ -149,35 +154,54 @@ public class controladorJP {
         resultados[4][1] = quick.getMovimientos();
         resultados[4][0] = quick.getTiempoEjecucion();
 
+
+        resultadosM[0][2] = bubble_matriz.getComparaciones();
+        resultadosM[0][1] = bubble_matriz.getMovimientos();
+        resultadosM[0][0] = bubble_matriz.getTiempoEjecucion();
+
+        resultadosM[1][2] = insert_matriz.getComparaciones();
+        resultadosM[1][1] = insert_matriz.getMovimientos();
+        resultadosM[1][0] = insert_matriz.getTiempoEjecucion();
+
+        resultadosM[2][2] = merge_matriz.getComparaciones();
+        resultadosM[2][1] = merge_matriz.getMovimientos();
+        resultadosM[2][0] = merge_matriz.getTiempoEjecucion();
+
+        resultadosM[3][2] = selection_matriz.getComparaciones();
+        resultadosM[3][1] = selection_matriz.getMovimientos();
+        resultadosM[3][0] = selection_matriz.getTiempoEjecucion();
+
+        resultadosM[4][2] = quick_matriz.getComparaciones();
+        resultadosM[4][1] = quick_matriz.getMovimientos();
+        resultadosM[4][0] = quick_matriz.getTiempoEjecucion();
+
         // Devolver la copia ordenada (puede ser cualquiera) junto con los resultados
-        return new ResultadoComparacion(copia5, resultados); // Usamos quick como referencia
+        return new ResultadoComparacion(copia5, resultados, matriz5,resultadosM); // Usamos quick como referencia
     }
 
-    /*
-
-    como usar
-    ResultadoComparacion resultado = CreateArrayPoliticos(arregloOriginal);
-    Politico[] arregloOrdenado = resultado.getArregloOrdenado();
-    long[][] estadisticas = resultado.getEstadisticas();*/
 
 
-    public long[][] realizarComparacionesCrecientes(int tamañoInicial, int tasaCrecimiento) {
+    public RetornoComparaciones realizarComparacionesCrecientes(int tamañoInicial, int tasaCrecimiento) {
         int tamaño = tamañoInicial;
 
 
         long[][] acumulados = new long[5][3];
+        long[][] acumuladosM = new long[5][3];
         int repeticiones = 0;
-        while (tamaño <= 5) {
+        while (tamaño <= 10) {
              // Para guardar la suma de comparaciones, movimientos, tiempo
             repeticiones += 1; // Para mayor precisión en el promedio
             Politico[] arreglo = CreateArrayPoliticosOrdenado(tamaño);
-            ResultadoComparacion resultado = OrdenamientoPoliticos(arreglo);
+            Politico[][] matriz = CreateMatriz(arreglo);
+            ResultadoComparacion resultado = OrdenamientoPoliticos(arreglo, matriz);
             long[][] datos = resultado.getEstadisticas();
+            long[][] datosM = resultado.getEstadisticasM();
 
             // Acumular los resultados para promediarlos
             for (int j = 0; j < 5; j++) {
                 for (int k = 0; k < 3; k++) {
                     acumulados[j][k] += datos[j][k];
+                    acumuladosM[j][k] += datosM[j][k];
                 }
             }
 
@@ -186,11 +210,19 @@ public class controladorJP {
         }
         for (int j = 0; j < 5; j++) {
             for (int k = 0; k < 3; k++) {
-                acumulados[j][k] = acumulados[j][k]/repeticiones;
+                if(repeticiones != 0){
+                    acumulados[j][k] = acumulados[j][k]/repeticiones;
+                    acumuladosM[j][k] = acumuladosM[j][k]/repeticiones;
+                }
+
             }
         }
-        return acumulados;
+        
+        RetornoComparaciones retorno = new RetornoComparaciones(acumulados, acumuladosM);
+        
+        return retorno;
     }
+
     public static void imprimirMatriz(long[][] matriz) {
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
