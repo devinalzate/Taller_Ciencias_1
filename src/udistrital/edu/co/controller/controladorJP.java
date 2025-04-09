@@ -1,6 +1,9 @@
 package udistrital.edu.co.controller;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
 import udistrital.edu.co.model.*;
+
+import java.io.IOException;
 
 public class controladorJP {
     private InsertionSortStrategy insert;
@@ -27,6 +30,8 @@ public class controladorJP {
         merge_matriz =  new MergeSortStrategy();
         selection_matriz = new SelectionSortStrategy();
         quick_matriz = new QuickSortStrategy();
+
+
     }
 
     public Politico[] CreateArrayPoliticos(int n) {
@@ -183,19 +188,27 @@ public class controladorJP {
 
     public RetornoComparaciones realizarComparacionesCrecientes(int tamañoInicial, int tasaCrecimiento) {
         int tamaño = tamañoInicial;
+        PDDocument documentoGlobal = new PDDocument();
+        pdf p = new pdf();
 
+        Politico[] arreglo = null;
+        Politico[][] matriz = null;
+        ResultadoComparacion resultado = null;
+        long[][] datos = null;
+        long[][] datosM = null;
+        String[] headers = {"Algoritmo", "Tiempo", "Iteraciones", "Comparaciones"};
 
         long[][] acumulados = new long[5][3];
         long[][] acumuladosM = new long[5][3];
         int repeticiones = 0;
-        while (tamaño <= 10) {
+        while (tamaño <= 9) {
              // Para guardar la suma de comparaciones, movimientos, tiempo
             repeticiones += 1; // Para mayor precisión en el promedio
-            Politico[] arreglo = CreateArrayPoliticosOrdenado(tamaño);
-            Politico[][] matriz = CreateMatriz(arreglo);
-            ResultadoComparacion resultado = OrdenamientoPoliticos(arreglo, matriz);
-            long[][] datos = resultado.getEstadisticas();
-            long[][] datosM = resultado.getEstadisticasM();
+            arreglo = CreateArrayPoliticos(tamaño);
+            matriz = CreateMatriz(arreglo);
+            resultado = OrdenamientoPoliticos(arreglo, matriz);
+            datos = resultado.getEstadisticas();
+            datosM = resultado.getEstadisticasM();
 
             // Acumular los resultados para promediarlos
             for (int j = 0; j < 5; j++) {
@@ -219,7 +232,16 @@ public class controladorJP {
         }
         
         RetornoComparaciones retorno = new RetornoComparaciones(acumulados, acumuladosM);
-        
+        try {
+            pdf.agregarContenidoAlPDF(documentoGlobal, arreglo, resultado.getArregloOrdenado(), matriz, resultado.getMatrizOrdenada(), headers, datos, datosM);
+            documentoGlobal.save("porno.pdf");
+            documentoGlobal.close();
+            System.out.println("✅ PDF generado correctamente con múltiples secciones.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return retorno;
     }
 
